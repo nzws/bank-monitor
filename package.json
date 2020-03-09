@@ -24,11 +24,11 @@
     "pretty-quick": "^2.0.1"
   },
   "scripts": {
-    "lint:prettier": "prettier --check --ignore-path .gitignore \"**/*.{js,json,yml,yaml,md}\"",
-    "lint:js": "eslint --ignore-path .gitignore \"**/*.js\"",
+    "lint:prettier": "prettier --check \"**/*.{js,json,yml,yaml,md}\"",
+    "lint:js": "eslint \"**/*.js\" --cache",
     "lint": "npm-run-all lint:* -p",
-    "format:prettier": "pretty-quick",
-    "format:js": "eslint --ignore-path .gitignore --fix \"**/*.js\"",
+    "format:prettier": "prettier --write \"**/*.{js,json,yml,yaml,md}\"",
+    "format:js": "eslint --fix \"**/*.js\" --cache",
     "format": "npm-run-all format:* -s",
     "b": "yarn workspace @nzws/bank-app-backend",
     "f": "yarn workspace @nzws/bank-app-frontend"
