@@ -4,33 +4,39 @@ on: [push, pull_request]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-
     strategy:
       matrix:
+        os: [macos-latest, ubuntu-latest]
         node-version: [12.x, 13.x]
 
+    runs-on: ${{ matrix.os }}
+
     steps:
-      - uses: actions/checkout@v1
+      - name: Checkout code
+        uses: actions/checkout@v2
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Restore deps from actions cache
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: Restore yarn cache
         uses: actions/cache@v1
         id: cache
         with:
-          path: node_modules
-          key: ${{ runner.os }}-${{ matrix.node-version }}-${{ hashFiles('yarn.lock') }}
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
 
-      - name: Install deps
-        if: steps.cache.outputs.cache-hit != 'true'
+      - name: Install packages
         run: yarn --frozen-lockfile
 
-      - name: Run linter
+      - name: Lint
         run: yarn lint
-
         env:
           CI: true
