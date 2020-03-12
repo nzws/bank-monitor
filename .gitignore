@@ -129,3 +129,6 @@ web-report/
 .DS_Store
 
 __generated__/
+GoogleService-Info.plist
+google-services.json
+.jks

@@ -18,7 +18,23 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "me.nzws.app.bank-app",
+      "googleServicesFile": "./GoogleService-Info.plist",
+      "config": {
+        "googleSignIn": {
+          "reservedClientId": "com.googleusercontent.apps.471082645722-5g5cp19gqc00c6deju6mv8l1h2uo5114"
+        }
+      }
+    },
+    "android": {
+      "package": "me.nzws.app.bank_app",
+      "googleServicesFile": "./google-services.json",
+      "config": {
+        "googleSignIn": {
+          "certificateHash": "70:37:7A:33:24:C6:7E:B5:B2:51:6C:1F:67:F1:00:43:87:3E:9C:97"
+        }
+      }
     },
     "packagerOpts": {
       "config": "metro.config.js"

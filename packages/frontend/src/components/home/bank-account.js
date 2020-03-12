@@ -10,12 +10,14 @@ const BankAccountBlock = styled(FlatList)({
 
 const BankAccountTab = styled(TouchableOpacity)({
   alignItems: 'center',
-  width: 100
+  paddingLeft: 10,
+  paddingRight: 10,
+  minWidth: 100
 });
 const BankAccountText = styled(Text)(
   ({ active, theme: { primary, secondary } }) => ({
     fontSize: 20,
-    fontWeight: 200,
+    fontWeight: 300,
     color: active ? primary : secondary,
     textTransform: 'capitalize'
   })

@@ -1,14 +1,13 @@
 import React from 'react';
-import { Text, View, SectionList } from 'react-native';
+import { View, SectionList } from 'react-native';
+import HeaderImageScrollView from 'react-native-image-header-scroll-view';
 import styled from 'styled-components/native';
-import { Center, Container } from '../components/styles/layout';
+
+import { Center, Title } from '../components/styles/layout';
 import Head from '../components/home/head';
 import LogBlock from '../components/home/log-block';
 import LogTitle from '../components/home/log-title';
-
-const Title = styled(Text)({
-  fontSize: ({ fontSize }) => fontSize || 20
-});
+import Navbar from '../components/home/navbar';
 
 const Main = styled(View)({
   paddingLeft: 20,
@@ -18,7 +17,13 @@ const Main = styled(View)({
 const mock = [
   {
     date: new Date(),
-    data: [
+    data: []
+  }
+];
+
+for (let i = 0; i < 20; i++) {
+  mock[0].data.push(
+    ...[
       {
         bank: 'rakuten',
         name: 'VISAデビット',
@@ -34,14 +39,18 @@ const mock = [
         balance: 12000
       }
     ]
-  }
-];
+  );
+}
 
 const Home = () => {
   return (
-    <Container>
-      <Head />
-
+    <HeaderImageScrollView
+      maxHeight={380}
+      renderForeground={() => <Head />}
+      renderHeader={() => <Navbar />}
+      maxOverlayOpacity={0}
+      useNativeDriver
+    >
       <Center>
         <Title fontSize={30}>History</Title>
       </Center>
@@ -49,12 +58,12 @@ const Home = () => {
       <Main>
         <SectionList
           sections={mock}
-          keyExtractor={(item, index) => item + index}
+          keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => <LogBlock item={item} />}
           renderSectionHeader={({ section }) => <LogTitle section={section} />}
         />
       </Main>
-    </Container>
+    </HeaderImageScrollView>
   );
 };
 

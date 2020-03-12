@@ -3,12 +3,13 @@ import { Image, Text, View } from 'react-native';
 import styled from 'styled-components/native';
 import { lighten } from 'polished';
 import shadow from '../styles/shadow';
-import { Center } from '../styles/layout';
+import { Center, Title } from '../styles/layout';
 import { currencyToString } from '../../utils/currency';
 import BankAccount from './bank-account';
 
 const HeadBlock = styled(Center)({
   background: '#fff',
+  paddingTop: 50,
   ...shadow(10)
 });
 
@@ -19,14 +20,10 @@ const Avatar = styled(Image)({
   marginBottom: 15
 });
 
-const Title = styled(Text)({
-  fontSize: ({ fontSize }) => fontSize || 20
-});
-
 const Line = styled(View)({
   borderColor: ({ theme: { secondary } }) => lighten(0.5, secondary),
-  borderWidth: 1,
-  width: '80%',
+  borderWidth: 0.5,
+  width: '100%',
   marginTop: 20,
   marginBottom: 20
 });
