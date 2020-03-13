@@ -1,6 +1,6 @@
-# bank-app
+# bank-monitor
 
-![Node CI](https://github.com/nzws/bank-app/workflows/Node%20CI/badge.svg)
+![Node CI](https://github.com/nzws/bank-monitor/workflows/Node%20CI/badge.svg)
 
 ## Status: 超 WIP
 
@@ -9,4 +9,4 @@
 ## License
 
 - pageages/backend: MIT
-- packages/frontend: bank-app License (See LICENSE.md)
+- packages/frontend: bank-monitor License (See LICENSE.md)

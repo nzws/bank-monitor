@@ -76,7 +76,7 @@ const SignIn = () => {
 
   return (
     <StyledContainer>
-      <Title fontSize={40}>bank-app</Title>
+      <Title fontSize={40}>Bank Monitor</Title>
       <Title fontSize={18}>A open source online-banking app</Title>
 
       <Input

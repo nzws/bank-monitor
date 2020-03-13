@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Bank App",
-    "slug": "bank-app",
+    "name": "Bank Monitor",
+    "slug": "bank-monitor",
     "privacy": "unlisted",
     "sdkVersion": "36.0.0",
     "platforms": ["ios", "android", "web"],

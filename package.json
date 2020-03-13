@@ -1,5 +1,5 @@
 {
-  "name": "@nzws/bank-app",
+  "name": "@nzws/bank-monitor",
   "author": "nzws <i@nzws.me>",
   "engines": {
     "node": "12.x || 13.x"
@@ -30,7 +30,7 @@
     "format:prettier": "pretty-quick",
     "format:js": "eslint --fix \"**/*.js\" --cache --ignore-path .gitignore",
     "format": "npm-run-all format:* -s",
-    "b": "yarn workspace @nzws/bank-app-backend",
-    "f": "yarn workspace @nzws/bank-app-frontend"
+    "b": "yarn workspace @nzws/bank-monitor-backend",
+    "f": "yarn workspace @nzws/bank-monitor-frontend"
   }
 }
