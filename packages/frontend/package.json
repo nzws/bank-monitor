@@ -23,7 +23,7 @@
     "react-native-image-header-scroll-view": "^0.10.3",
     "react-native-reanimated": "~1.7.0",
     "react-native-safe-area-context": "^0.7.3",
-    "react-native-screens": "2.2.0",
+    "react-native-screens": "2.3.0",
     "react-native-web": "~0.12.2",
     "styled-components": "^5.0.1",
     "unstated-next": "^1.1.0"
