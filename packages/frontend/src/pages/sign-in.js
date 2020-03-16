@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, Button, Alert } from 'react-native';
+import { View, TextInput, Button, Alert, AsyncStorage } from 'react-native';
+import { Notifications } from 'expo';
+import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
 import { setItemAsync } from 'expo-secure-store';
 import * as GoogleSignIn from 'expo-google-sign-in';
 import styled from 'styled-components/native';
+import { useNavigation } from '@react-navigation/native';
 import { Center, Title } from '../components/styles/layout';
+import api from '../utils/api';
 
 const StyledContainer = styled(Center)({
   paddingTop: 150
@@ -26,6 +30,7 @@ const BtnBlock = styled(View)({
 const isExpo = Constants.appOwnership === 'expo';
 
 const SignIn = () => {
+  const navigation = useNavigation();
   const [domain, setDomain] = useState('');
   const [password, setPassword] = useState('');
   const [UID, setUID] = useState('');
@@ -44,10 +49,34 @@ const SignIn = () => {
     }
   }, []);
 
-  const login = uid => {
-    // todo
-    const token = uid;
-    setItemAsync('app_token', token);
+  const login = UID => {
+    AsyncStorage.setItem('domain', domain)
+      .then(() => Permissions.askAsync(Permissions.NOTIFICATIONS))
+      .then(({ status }) =>
+        status === 'granted' ? Notifications.getExpoPushTokenAsync() : null
+      )
+      .then(token =>
+        api({
+          path: 'login',
+          method: 'POST',
+          data: {
+            UID,
+            password,
+            deviceToken: isExpo ? null : token
+          }
+        })
+      )
+      .then(({ token, error }) => {
+        if (!token) {
+          throw new Error(error);
+        }
+
+        return setItemAsync('app_token', token);
+      })
+      .then(() => navigation.navigate('Home'))
+      .catch(e => {
+        Alert.alert('Error', e.message || 'Unknown error');
+      });
   };
 
   const onPress = () => {

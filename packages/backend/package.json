@@ -1,6 +1,33 @@
 {
   "name": "@nzws/bank-monitor-backend",
   "version": "1.0.0",
-  "license": "MIT",
-  "private": true
+  "license": "AGPL-3.0",
+  "private": true,
+  "devDependencies": {
+    "@babel/node": "^7.8.7",
+    "@babel/preset-env": "^7.8.7",
+    "kleur": "^3.0.3",
+    "nodemon": "^2.0.2",
+    "sequelize-cli": "^5.5.1"
+  },
+  "dependencies": {
+    "@sentry/node": "^5.10.2",
+    "axios": "^0.19.0",
+    "koa": "^2.11.0",
+    "koa-bodyparser": "^4.2.1",
+    "koa-router": "^7.4.0",
+    "path-to-regexp": "^6.1.0",
+    "platform": "^1.3.5",
+    "sequelize": "^5.21.3",
+    "sqlite3": "^4.1.1"
+  },
+  "scripts": {
+    "build:server": "cross-env NODE_ENV=production babel app -d build --copy-files",
+    "build": "npm-run-all build:* -s",
+    "dev:server": "nodemon --exec \"cross-env NODE_ENV=development node -r @babel/register app\" -e js,pug,json --watch app --delay 500ms",
+    "dev": "npm-run-all --parallel dev:*",
+    "start": "node build",
+    "manage:encrypt": "babel-node scripts/encrypt-config.js"
+  },
+  "prettier": "@yuzulabo/prettier-config"
 }

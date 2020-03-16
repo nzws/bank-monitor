@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "471082645722",
+    "firebase_url": "https://nzws-bank-app.firebaseio.com",
+    "project_id": "nzws-bank-app",
+    "storage_bucket": "nzws-bank-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:471082645722:android:c60d8ba6c8bbd15c570de3",
+        "android_client_info": {
+          "package_name": "me.nzws.app.bank_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "471082645722-pekfpv8h3c27a8s44i6ami5ufeovonmo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9ZQ0ZiOJxr4EXc-fofsa9MeuPr-bWlCE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "471082645722-pekfpv8h3c27a8s44i6ami5ufeovonmo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

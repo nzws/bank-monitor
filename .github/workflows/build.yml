@@ -1,15 +1,19 @@
-name: Build
+name: Build and Release
 
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - 'v*'
 
 jobs:
   build:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        node-version: [12.x]
+
+    env:
+      node-version: 12.x
+      expo-sdk-version: 36.0.0
 
     runs-on: ${{ matrix.os }}
 
@@ -17,10 +21,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js ${{ env.node-version }}
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ env.node-version }}
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
@@ -41,12 +45,13 @@ jobs:
       - name: Link monorepo
         run: yarn f expo-link
 
-      - name: Build
+      - name: Build Android
+        if: runner.os == 'Linux'
         id: expo-build
         uses: nzws/turtle-action@master
         with:
           build-os: 'android'
-          expo-sdk-version: '36.0.0' # your SDK version
+          expo-sdk-version: ${{ env.expo-sdk-version }}
           working-dir: './packages/frontend/'
         env:
           EXPO_USERNAME: ${{ secrets.EXPO_USERNAME }}
@@ -56,8 +61,46 @@ jobs:
           EXPO_ANDROID_KEYSTORE_PASSWORD: ${{ secrets.EXPO_ANDROID_KEYSTORE_PASSWORD }}
           EXPO_ANDROID_KEY_PASSWORD: ${{ secrets.EXPO_ANDROID_KEY_PASSWORD }}
 
+      - name: Build iOS
+        if: runner.os == 'macOS'
+        id: expo-build
+        uses: nzws/turtle-action@master
+        with:
+          build-os: 'ios'
+          expo-sdk-version: ${{ env.expo-sdk-version }}
+          working-dir: './packages/frontend/'
+        env:
+          EXPO_USERNAME: ${{ secrets.EXPO_USERNAME }}
+          EXPO_PASSWORD: ${{ secrets.EXPO_PASSWORD }}
+          # EXPO_APPLE_TEAM_ID: ${{ secrets.EXPO_APPLE_TEAM_ID }}
+          # EXPO_IOS_DIST_P12_BASE64: ${{ secrets.EXPO_IOS_DIST_P12_BASE64 }}
+          # EXPO_IOS_DIST_P12_PASSWORD: ${{ secrets.EXPO_IOS_DIST_P12_PASSWORD }}
+          # EXPO_IOS_PROVISIONING_PROFILE_BASE64: ${{ secrets.EXPO_IOS_PROVISIONING_PROFILE_BASE64 }}
+
       - name: Upload asset
         uses: actions/upload-artifact@v1
         with:
           name: asset
           path: ${{ steps.expo-build.outputs.asset-path }}
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: ${{ github.ref }}
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ steps.expo-build.outputs.asset-path }}
+          asset_name: expo-android.apk
+          asset_content_type: application/vnd.android.package-archive

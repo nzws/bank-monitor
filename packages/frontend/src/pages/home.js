@@ -45,7 +45,7 @@ for (let i = 0; i < 20; i++) {
 const Home = () => {
   return (
     <HeaderImageScrollView
-      maxHeight={380}
+      maxHeight={200}
       renderForeground={() => <Head />}
       renderHeader={() => <Navbar />}
       maxOverlayOpacity={0}

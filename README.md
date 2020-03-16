@@ -8,5 +8,5 @@
 
 ## License
 
-- pageages/backend: MIT
+- pageages/backend: AGPL-3.0
 - packages/frontend: bank-monitor License (See LICENSE.md)

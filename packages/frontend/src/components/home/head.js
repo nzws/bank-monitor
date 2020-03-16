@@ -1,9 +1,8 @@
 import React from 'react';
-import { Image, Text, View } from 'react-native';
+import { Text } from 'react-native';
 import styled from 'styled-components/native';
-import { lighten } from 'polished';
 import shadow from '../styles/shadow';
-import { Center, Title } from '../styles/layout';
+import { Center } from '../styles/layout';
 import { currencyToString } from '../../utils/currency';
 import BankAccount from './bank-account';
 
@@ -12,7 +11,7 @@ const HeadBlock = styled(Center)({
   paddingTop: 50,
   ...shadow(10)
 });
-
+/*
 const Avatar = styled(Image)({
   width: 100,
   height: 100,
@@ -27,7 +26,7 @@ const Line = styled(View)({
   marginTop: 20,
   marginBottom: 20
 });
-
+*/
 const Desc = styled(Text)({
   fontSize: 15,
   color: '#a2a2a2',
@@ -42,11 +41,6 @@ const Balance = styled(Text)({
 const Head = () => {
   return (
     <HeadBlock>
-      <Avatar source={{ uri: 'https://github.com/nzws.png' }} />
-      <Title>nzws</Title>
-
-      <Line />
-
       <BankAccount />
       <Desc>Balance</Desc>
       <Balance>{currencyToString(12500)}</Balance>

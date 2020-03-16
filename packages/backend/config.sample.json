@@ -1,0 +1,25 @@
+{
+  "SENTRY_ID": "",
+  "FCM_SERVER_KEY": "",
+  "plain_data": {
+    "<YOUR_GOOGLE_ACCOUNT_UID>": {
+      "display_name": "ねじわさ",
+      "encrypt_password": "my-password",
+      "banks": {
+        "jp-bank": {
+          "display_name": "ゆうちょ",
+          "bank": "jp-bank",
+          "username": "0000-0000-00000",
+          "password": "password",
+          "options": {
+            "secretQuestions": [
+              ["q", "a"],
+              ["q", "a"],
+              ["q", "a"]
+            ]
+          }
+        }
+      }
+    }
+  }
+}
