@@ -20,5 +20,5 @@ export const currencyToString = (num = 0) => {
   newArr.push(tmp);
   newArr.reverse();
 
-  return '¥ ' + (hasMinus ? '-' : '') + newArr.join(',');
+  return (hasMinus ? '- ' : '') + '¥ ' + newArr.join(',');
 };

@@ -1,4 +1,4 @@
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage, Alert } from 'react-native';
 import { getItemAsync, setItemAsync } from 'expo-secure-store';
 
 const api = async ({ path, method = 'GET', data = {} }) => {
@@ -14,8 +14,20 @@ const api = async ({ path, method = 'GET', data = {} }) => {
     }
   });
   const json = await res.json();
-  if (token && json.error === 'require_auth') {
-    await setItemAsync('app_token', null);
+  if (
+    token &&
+    (json.error === 'require_auth' || json.error === 'invalid_token')
+  ) {
+    await setItemAsync('app_token', '');
+    Alert.alert(
+      'Recertification required',
+      'Restart the app and sign in again.'
+    );
+    throw new Error(json.error);
+  }
+  if (json.error) {
+    Alert.alert(`API Error: ${json.code}`, json.error);
+    throw new Error(json.error);
   }
 
   return json;

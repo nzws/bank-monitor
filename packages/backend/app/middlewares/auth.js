@@ -2,7 +2,7 @@ import { errorController } from '../controllers/api/common';
 import { authToken } from '../utils/token';
 
 const auth = async (ctx, next) => {
-  const token = ctx.request.headers.Authorization;
+  const token = ctx.request.headers.authorization;
   if (!token) {
     return errorController(ctx, 403, 'require_auth');
   }

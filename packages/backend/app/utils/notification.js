@@ -4,6 +4,7 @@ import db from '../db';
 import { FCM_SERVER_KEY } from '../../config';
 import { logError, logInfo } from './logger';
 import { localeRunner } from './locale';
+import locale from './messages';
 
 const Op = Sequelize.Op;
 const Auth = db.tables.Auth;
@@ -21,12 +22,16 @@ export const FCMDeviceGroup = async (UID, deviceToken, type) => {
     return;
   }
 
+  const isOnce = typeof deviceToken === 'string';
   const msg = {
     operation: type,
     notification_key_name: UID,
-    registration_ids: [deviceToken],
-    notification_key: hasSub ? hasSub.token : null
+    registration_ids: isOnce ? [deviceToken] : deviceToken
   };
+  if (hasSub) {
+    msg.notification_key = hasSub.token;
+  }
+
   const result = await axios.post(
     'https://android.googleapis.com/gcm/notification',
     JSON.stringify(msg),
@@ -51,7 +56,14 @@ export const FCMDeviceGroup = async (UID, deviceToken, type) => {
         deviceToken: null
       },
       {
-        where: { deviceToken, UID }
+        where: {
+          deviceToken: isOnce
+            ? deviceToken
+            : {
+                [Op.or]: deviceToken
+              },
+          UID
+        }
       }
     );
 
@@ -76,19 +88,7 @@ export const FCMDeviceGroup = async (UID, deviceToken, type) => {
   }
 };
 
-const locale = {
-  login: {
-    title: 'Security alert: new login',
-    body: 'IP: {ip}\nDevice: {device}'
-  },
-  newDeal: {
-    title: 'New deal: {type}',
-    body:
-      'Name: {name}\nAmount: {amount}\nBank: {bankId}\nBalance of bank: {balance}'
-  }
-};
-
-export const notificationSender = async (UID, type, options = {}) => {
+const sendFCM = async (UID, type, options = {}) => {
   const sub = await db.tables.FCMGroup.findOne({
     where: {
       UID
@@ -134,4 +134,23 @@ export const notificationSender = async (UID, type, options = {}) => {
     .catch(error => {
       logError('[FCM ERR]', error.response.status, error.response.data);
     });
+};
+
+export const notificationSender = async (
+  UID,
+  type,
+  options = {},
+  sendTo = 'all'
+) => {
+  if (sendTo === 'all' || sendTo === 'push') {
+    sendFCM(UID, type, options);
+  }
+
+  if (sendTo === 'all' || sendTo === 'notification') {
+    db.tables.Notification.create({
+      UID,
+      type,
+      data: options
+    });
+  }
 };

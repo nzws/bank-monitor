@@ -34,14 +34,14 @@ const Amount = styled(Text)({
 const LogBlock = ({ item }) => {
   return (
     <Log>
-      <Amount isDeposit={item.type === 'deposit'}>
+      <Amount isDeposit={item.amount > 0}>
         {currencyToString(item.amount)}
       </Amount>
       <Name ellipsizeMode="tail" numberOfLines={1}>
         {item.name}
       </Name>
       <Sub ellipsizeMode="tail" numberOfLines={1}>
-        {item.bank}・Balance: {currencyToString(item.balance)}
+        {item.bankId}・Balance: {currencyToString(item.balance)}
       </Sub>
     </Log>
   );
