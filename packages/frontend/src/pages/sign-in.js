@@ -3,7 +3,7 @@ import { View, TextInput, Button, Alert, AsyncStorage } from 'react-native';
 import { Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
-import { setItemAsync } from 'expo-secure-store';
+import { setItemAsync, getItemAsync } from 'expo-secure-store';
 import * as GoogleSignIn from 'expo-google-sign-in';
 import styled from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
@@ -46,10 +46,16 @@ const SignIn = () => {
         .catch(e => Alert.alert('Error', e.message));
     } else {
       setIsReady(true);
+      getItemAsync('uid').then(uid => uid && setUID(uid));
     }
+    AsyncStorage.getItem('domain').then(domain => domain && setDomain(domain));
   }, []);
 
   const login = UID => {
+    if (isExpo) {
+      setItemAsync('uid', UID);
+    }
+
     AsyncStorage.setItem('domain', domain)
       .then(() => Permissions.askAsync(Permissions.NOTIFICATIONS))
       .then(({ status }) =>
@@ -106,7 +112,7 @@ const SignIn = () => {
   return (
     <StyledContainer>
       <Title fontSize={40}>Bank Monitor</Title>
-      <Title fontSize={18}>A open source online-banking app</Title>
+      <Title fontSize={18}>An open online-banking app</Title>
 
       <Input
         onChangeText={setDomain}

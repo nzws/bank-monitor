@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import Home from './pages/home';
-import Settings from './pages/settings';
 import SignIn from './pages/sign-in';
+import Setting from './pages/setting';
 
 const Stack = createStackNavigator();
 
@@ -19,7 +19,7 @@ const Routes = ({ alreadySignIn }) => {
       initialRouteName={alreadySignIn ? 'Home' : 'SignIn'}
     >
       <Stack.Screen name="Home" component={Home} options={NO_HEADER} />
-      <Stack.Screen name="Settings" component={Settings} />
+      <Stack.Screen name="Setting" component={Setting} />
       <Stack.Screen name="SignIn" component={SignIn} />
     </Stack.Navigator>
   );

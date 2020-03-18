@@ -4,6 +4,7 @@ import Auth from './auth';
 import History from './history';
 import Notification from './notification';
 import FCMGroup from './fcmgroup';
+import Status from './status';
 
 const sequelize = new Sequelize({
   dialect: 'sqlite',
@@ -15,7 +16,8 @@ const db = {
     Auth,
     History,
     Notification,
-    FCMGroup
+    FCMGroup,
+    Status
   }
 };
 

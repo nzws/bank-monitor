@@ -12,6 +12,7 @@ const History = sequelize => {
     UID: Sequelize.STRING,
     bankId: Sequelize.STRING,
     name: Sequelize.STRING,
+    amount: Sequelize.INTEGER,
     balance: Sequelize.INTEGER,
     date: Sequelize.DATE
   });

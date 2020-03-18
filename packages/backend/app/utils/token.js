@@ -12,7 +12,10 @@ export const authToken = async (tokenId = '') => {
 
   const token = await db.tables.Auth.findOne({
     where: {
-      token: tokenId
+      token: tokenId,
+      isDeleted: {
+        [Op.is]: null
+      }
     }
   });
 
@@ -45,7 +48,6 @@ export const createToken = async (
       IP
     });
 
-    console.log(deviceToken);
     if (deviceToken) {
       await FCMDeviceGroup(UID, deviceToken, 'add');
     }
@@ -59,7 +61,7 @@ export const createToken = async (
 
 export const revokeToken = async (token = '') => {
   try {
-    const auth = await db.tables.Auth.findOne({ token });
+    const auth = await db.tables.Auth.findOne({ where: { token } });
     await auth.update({ isDeleted: new Date() });
     if (auth.deviceToken) {
       await FCMDeviceGroup(auth.UID, auth.deviceToken, 'remove');

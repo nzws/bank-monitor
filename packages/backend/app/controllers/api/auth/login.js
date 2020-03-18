@@ -6,6 +6,14 @@ import { decrypt } from '../../../utils/crypto';
 import state from '../../../utils/state';
 import { createToken } from '../../../utils/token';
 import { notificationSender } from '../../../utils/notification';
+import updater from '../../../utils/updater';
+
+const createUpdater = async UID => {
+  const auth = Object.keys(state.get(`${UID}_auth`));
+  for (const bankId of auth) {
+    await updater(UID, bankId);
+  }
+};
 
 const authLogin = async ctx => {
   const { ip, request, header } = ctx;
@@ -36,7 +44,10 @@ const authLogin = async ctx => {
     device: description,
     ip
   });
+
   const token = await createToken(UID, description, ip, deviceToken);
+  createUpdater(UID);
+
   ctx.body = { status: 'success', token };
 };
 

@@ -10,8 +10,8 @@ const Notification = sequelize => {
       defaultValue: Sequelize.UUIDV4
     },
     UID: Sequelize.STRING,
-    title: Sequelize.STRING,
-    body: Sequelize.TEXT
+    type: Sequelize.STRING,
+    data: Sequelize.JSON
   });
 };
 
