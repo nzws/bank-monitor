@@ -46,6 +46,7 @@ const authLogin = async ctx => {
   });
 
   const token = await createToken(UID, description, ip, deviceToken);
+
   createUpdater(UID);
 
   ctx.body = { status: 'success', token };

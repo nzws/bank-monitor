@@ -34,7 +34,7 @@ if (plain_data) {
   logInfo('Database cleanup completed 🧹');
 
   const browser = await puppeteer.launch({
-    // headless: process.env.NODE_ENV !== 'development',
+    headless: process.env.NODE_ENV !== 'development',
     slowMo: 200,
     args: [
       '--disable-background-timer-throttling',

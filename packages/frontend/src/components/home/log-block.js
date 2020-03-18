@@ -2,18 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Text, TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
+import { useNavigation } from '@react-navigation/native';
 
 import { currencyToString } from '../../utils/currency';
+import Container from '../container';
 
 const Log = styled(TouchableOpacity)({
   width: '100%',
   position: 'relative',
   paddingRight: 85,
-  marginBottom: 20
+  marginBottom: 25
 });
 
 const Name = styled(Text)({
-  fontSize: 20,
+  fontSize: 18,
   marginBottom: 5
 });
 
@@ -32,8 +34,13 @@ const Amount = styled(Text)({
 });
 
 const LogBlock = ({ item }) => {
+  const nav = useNavigation();
+  const {
+    status: [status]
+  } = Container.useContainer();
+
   return (
-    <Log>
+    <Log onPress={() => nav.navigate('Transaction', { item })}>
       <Amount isDeposit={item.amount > 0}>
         {currencyToString(item.amount)}
       </Amount>
@@ -41,7 +48,8 @@ const LogBlock = ({ item }) => {
         {item.name}
       </Name>
       <Sub ellipsizeMode="tail" numberOfLines={1}>
-        {item.bankId}・Balance: {currencyToString(item.balance)}
+        {status[item.bankId]?.display_name}・Balance:{' '}
+        {currencyToString(item.balance)}
       </Sub>
     </Log>
   );

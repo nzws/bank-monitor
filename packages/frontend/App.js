@@ -11,7 +11,7 @@ import { getItemAsync } from 'expo-secure-store';
 import Routes from './src/routes';
 import Container from './src/components/container';
 
-const theme = {
+export const theme = {
   primary: '#34B362',
   secondary: '#4d4d4d',
   info: '#4088C7',

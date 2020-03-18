@@ -4,12 +4,20 @@ const locale = {
     body: 'IP: {ip}\nDevice: {device}'
   },
   newDeal: {
-    title: 'New deal: {bankId}',
+    title: 'Update: {bankId}',
     body: 'Name: {name}\nAmount: {amount}\nBalance of bank: {balance}'
   },
   updateError: {
     title: 'Data update failed: {bankId}',
     body: '{message}'
+  },
+  revoked: {
+    title: 'Account token revoked',
+    body: 'IP: {ip}'
+  },
+  deposit_requested_rakuten: {
+    title: 'A deposit has been requested for {bankId}',
+    body: 'Amount: {amount}'
   }
 };
 

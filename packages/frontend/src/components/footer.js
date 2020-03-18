@@ -43,9 +43,9 @@ Btn.propTypes = {
   text: PropTypes.string.isRequired
 };
 
-const MainFooter = ({ now, children }) => (
+const MainFooter = ({ now, children, noContent = false }) => (
   <Container>
-    <Content>{children}</Content>
+    {noContent ? children : <Content>{children}</Content>}
     <Footer>
       <FooterTab>
         <Btn icon="list-box" page="Home" now={now} text="History" />
@@ -63,7 +63,7 @@ const MainFooter = ({ now, children }) => (
 MainFooter.propTypes = {
   now: PropTypes.string.isRequired,
   children: PropTypes.node,
-  useContent: PropTypes.bool
+  noContent: PropTypes.bool
 };
 
 export default MainFooter;

@@ -9,6 +9,8 @@ import authRevoke from './controllers/api/auth/revoke';
 
 import apiHistory from './controllers/api/history';
 import apiNotification from './controllers/api/notification';
+import apiRestartUpdater from './controllers/api/restart_updater';
+import apiDepositRakuten from './controllers/api/deposit_rakuten';
 import apiStatus from './controllers/api/status';
 
 const Route = () => {
@@ -20,6 +22,8 @@ const Route = () => {
 
   authAPI.post('/history', apiHistory);
   authAPI.post('/notification', apiNotification);
+  authAPI.post('/restart_updater', apiRestartUpdater);
+  authAPI.post('/deposit_rakuten', apiDepositRakuten);
   authAPI.get('/status', apiStatus);
 
   authAPI.all('*', notFoundController);

@@ -1,6 +1,9 @@
 import Sequelize from 'sequelize';
 import db from '../../../db';
-import { FCMDeviceGroup } from '../../../utils/notification';
+import {
+  FCMDeviceGroup,
+  notificationSender
+} from '../../../utils/notification';
 
 const Op = Sequelize.Op;
 
@@ -47,6 +50,10 @@ const authRevoke = async ctx => {
       }
     }
   );
+
+  notificationSender(UID, 'revoked', {
+    ip: ctx.ip
+  });
 
   ctx.body = { status: 'success' };
 };

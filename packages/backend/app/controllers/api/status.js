@@ -7,10 +7,15 @@ const apiStatus = async ctx => {
 
   const status = await db.tables.Status.findAll({
     where: { UID }
-  }).map(v => ({
-    ...v.dataValues,
-    display_name: authData[v.bankId].display_name
-  }));
+  }).map(v => {
+    const bankData = authData[v.bankId];
+
+    return {
+      ...v.dataValues,
+      display_name: bankData.display_name,
+      bank: bankData.bank
+    };
+  });
 
   ctx.body = { result: status };
 };

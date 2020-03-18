@@ -1,9 +1,15 @@
 import styled from 'styled-components/native';
 import { Platform, StatusBar, View, ScrollView, Text } from 'react-native';
 
+export const HeadMargin = Platform.OS === 'ios' ? 0 : StatusBar.currentHeight;
+
 export const Container = styled(ScrollView)({
-  marginTop: Platform.OS === 'ios' ? 0 : StatusBar.currentHeight,
+  marginTop: HeadMargin,
   marginBottom: 20
+});
+
+export const NoScrollContainer = styled(View)({
+  marginTop: HeadMargin
 });
 
 export const Center = styled(View)({
