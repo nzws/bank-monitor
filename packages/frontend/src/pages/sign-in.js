@@ -68,7 +68,7 @@ const SignIn = () => {
           data: {
             UID,
             password,
-            deviceToken: isExpo ? null : token
+            deviceToken: token
           }
         })
       )

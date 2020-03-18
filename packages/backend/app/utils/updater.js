@@ -119,7 +119,7 @@ const updater = async (UID, bankId) => {
             bankId,
             name: v.name,
             amount: currencyToString(v.amount),
-            balance: v.balance
+            balance: currencyToString(v.balance)
           },
           'push'
         );

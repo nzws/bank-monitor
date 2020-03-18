@@ -3,7 +3,6 @@ import Sequelize from 'sequelize';
 import Auth from './auth';
 import History from './history';
 import Notification from './notification';
-import FCMGroup from './fcmgroup';
 import Status from './status';
 
 const sequelize = new Sequelize({
@@ -16,7 +15,6 @@ const db = {
     Auth,
     History,
     Notification,
-    FCMGroup,
     Status
   }
 };

@@ -1,6 +1,5 @@
 {
   "SENTRY_ID": "",
-  "FCM_SERVER_KEY": "",
   "plain_data": {
     "<YOUR_GOOGLE_ACCOUNT_UID>": {
       "encrypt_password": "my-password",

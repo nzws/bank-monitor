@@ -1,7 +1,6 @@
 import Sequelize from 'sequelize';
 import { logError } from './logger';
 import db from '../db';
-import { FCMDeviceGroup } from './notification';
 
 const Op = Sequelize.Op;
 
@@ -48,10 +47,6 @@ export const createToken = async (
       IP
     });
 
-    if (deviceToken) {
-      await FCMDeviceGroup(UID, deviceToken, 'add');
-    }
-
     return token.dataValues.token;
   } catch (e) {
     logError(e);
@@ -63,9 +58,6 @@ export const revokeToken = async (token = '') => {
   try {
     const auth = await db.tables.Auth.findOne({ where: { token } });
     await auth.update({ isDeleted: new Date() });
-    if (auth.deviceToken) {
-      await FCMDeviceGroup(auth.UID, auth.deviceToken, 'remove');
-    }
   } catch (e) {
     logError(e);
     throw e;
@@ -86,9 +78,6 @@ export const revokeAll = async () => {
         }
       }
     );
-    await db.tables.FCMGroup.destroy({
-      where: {}
-    });
   } catch (e) {
     logError(e);
     throw e;
