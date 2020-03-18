@@ -134,3 +134,4 @@ __generated__/
 config.json
 config.2.json
 *.sqlite
+build/
