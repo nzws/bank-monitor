@@ -1,9 +1,9 @@
-name: Build and Release
+name: Build
 
 on:
   push:
-    tags:
-      - 'v*'
+    branches:
+      - build
 
 jobs:
   build:
@@ -25,19 +25,6 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ env.node-version }}
-
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
-      - name: Restore yarn cache
-        uses: actions/cache@v1
-        id: cache
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
 
       - name: Install packages
         run: yarn --frozen-lockfile
@@ -66,25 +53,3 @@ jobs:
         with:
           name: asset
           path: ${{ steps.expo-build.outputs.asset-path }}
-
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: ${{ github.ref }}
-          draft: false
-          prerelease: false
-
-      - name: Upload Release Asset
-        id: upload-release-asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ steps.expo-build.outputs.asset-path }}
-          asset_name: expo-android.apk
-          asset_content_type: application/vnd.android.package-archive
