@@ -30,8 +30,7 @@ const updater = async (UID, bankId) => {
 
   const update = {
     running: true,
-    lastUpdatedAt: new Date(),
-    balance: 0
+    lastUpdatedAt: new Date()
   };
   if (status) {
     await db.tables.Status.update(update, {
@@ -44,7 +43,8 @@ const updater = async (UID, bankId) => {
     await db.tables.Status.create({
       ...update,
       UID,
-      bankId
+      bankId,
+      balance: 0
     });
   }
 
