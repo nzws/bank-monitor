@@ -6,9 +6,10 @@ import {
   Button,
   Text,
   ScrollView,
-  Alert
+  Alert,
+  TouchableOpacity
 } from 'react-native';
-import { Tab, Tabs, ScrollableTab } from 'native-base';
+import { Tab, Tabs, ScrollableTab, Icon } from 'native-base';
 import styled from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
 
@@ -52,6 +53,17 @@ const Balance = styled(Text)({
   marginBottom: 10
 });
 
+const RefreshButton = styled(TouchableOpacity)({
+  position: 'absolute',
+  top: 28,
+  right: 145
+});
+
+const RefreshButtonIcon = styled(Icon)({
+  fontSize: 22,
+  color: ({ theme: { secondary } }) => secondary
+});
+
 const Home = ({ bank: { bankId, bank, display_name } }) => {
   const nav = useNavigation();
   let {
@@ -85,7 +97,7 @@ const Home = ({ bank: { bankId, bank, display_name } }) => {
 
   const load = async pageId => {
     setIsLoading(true);
-    await updateStatus(setStatus);
+    updateStatus(setStatus);
     const apiData = await api({
       path: 'api/history',
       method: 'POST',
@@ -172,6 +184,11 @@ const Home = ({ bank: { bankId, bank, display_name } }) => {
 
       <Center>
         <Title fontSize={30}>History</Title>
+        {!isLoading && (
+          <RefreshButton onPress={() => load(0)}>
+            <RefreshButtonIcon name="refresh" />
+          </RefreshButton>
+        )}
       </Center>
 
       <Main>
