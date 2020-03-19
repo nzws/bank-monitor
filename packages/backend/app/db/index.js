@@ -5,9 +5,15 @@ import History from './history';
 import Notification from './notification';
 import Status from './status';
 
+const isDevelopment = process.env.NODE_ENV === 'development';
 const sequelize = new Sequelize({
   dialect: 'sqlite',
-  storage: './db.sqlite'
+  storage: './db.sqlite',
+  benchmark: isDevelopment,
+  logging: isDevelopment ? console.log : false,
+  dialectOptions: {
+    timezone: 'Asia/Tokyo'
+  }
 });
 
 const db = {

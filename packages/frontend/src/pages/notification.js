@@ -39,6 +39,7 @@ const Notification = () => {
   const [noti, setNoti] = useState([]);
 
   const load = async pageId => {
+    setIsLoading(true);
     const apiData = await api({
       path: 'api/notification',
       method: 'POST',
@@ -49,7 +50,11 @@ const Notification = () => {
 
     if (apiData.result[0]) {
       setNoti(prev => {
-        prev.push(...apiData.result);
+        if (pageId) {
+          prev = apiData.result;
+        } else {
+          prev.push(...apiData.result);
+        }
 
         return prev;
       });
@@ -70,6 +75,8 @@ const Notification = () => {
     <MainFooter now="Notification">
       <FlatList
         data={noti}
+        refreshing={isLoading}
+        onRefresh={() => load(0)}
         renderItem={({ item }) => {
           const msg = locale[item.type];
 

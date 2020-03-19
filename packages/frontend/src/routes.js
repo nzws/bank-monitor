@@ -48,7 +48,7 @@ const Routes = ({ alreadySignIn }) => {
       />
       <Stack.Screen name="SignIn" component={SignIn} />
       <Stack.Screen name="Transaction" component={Transaction} />
-      <Stack.Screen name="DepossitToRakuten" component={DepositRakuten} />
+      <Stack.Screen name="DepositToRakuten" component={DepositRakuten} />
     </Stack.Navigator>
   );
 };

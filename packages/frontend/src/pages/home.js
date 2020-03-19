@@ -83,19 +83,20 @@ const Home = ({ bank: { bankId, bank, display_name } }) => {
     ]);
   };
 
-  const load = async () => {
+  const load = async pageId => {
+    setIsLoading(true);
     updateStatus(setStatus);
     const apiData = await api({
       path: 'api/history',
       method: 'POST',
       data: {
-        page,
+        page: pageId || page,
         bankId: bankId === 'all' ? null : bankId
       }
     });
 
     if (apiData.result[0]) {
-      const newData = JSON.parse(JSON.stringify(data));
+      const newData = pageId ? {} : JSON.parse(JSON.stringify(data));
       apiData.result.forEach(v => {
         const day = new Date(v.date).toLocaleDateString('en-us');
 
@@ -111,7 +112,7 @@ const Home = ({ bank: { bankId, bank, display_name } }) => {
     }
 
     setIsLoading(false);
-    setPage(prev => prev + 1);
+    setPage(prev => (pageId || prev) + 1);
   };
 
   useEffect(() => {
@@ -163,7 +164,7 @@ const Home = ({ bank: { bankId, bank, display_name } }) => {
             <Button
               color={theme.success}
               title="Deposit from jp-bank"
-              onPress={() => nav.navigate('DepossitToRakuten', { bankId })}
+              onPress={() => nav.navigate('DepositToRakuten', { bankId })}
             />
           </View>
         )}
@@ -182,11 +183,16 @@ const Home = ({ bank: { bankId, bank, display_name } }) => {
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => <LogBlock item={item} />}
           renderSectionHeader={({ section }) => <LogTitle section={section} />}
-          refreshing={setIsLoading}
+          refreshing={isLoading}
+          onRefresh={() => load(0)}
         />
 
         {hasNext && (
-          <Button title="Load More" onPress={load} disabled={isLoading} />
+          <Button
+            title="Load More"
+            onPress={() => load()}
+            disabled={isLoading}
+          />
         )}
       </Main>
     </ScrollView>

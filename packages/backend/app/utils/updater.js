@@ -1,18 +1,57 @@
 import bankJs from '@nzws/bank-js';
 import db from '../db';
 import state from './state';
-import { logError } from './logger';
+import { logError, logWarn } from './logger';
 import { notificationSender } from './notification';
 import { currencyToString } from './currency';
 
 const objToUniqueStr = (name, amount, balance, date) =>
   name + amount + balance + new Date(date).toLocaleString();
 
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
 const updater = async (UID, bankId) => {
   const authData = state.get(`${UID}_auth`);
   if (!authData || !authData[bankId]) {
     logError(`UID: ${UID} auth data is not found`);
     return;
+  }
+
+  const status = await db.tables.Status.findOne({
+    where: {
+      UID,
+      bankId
+    }
+  });
+  if (status.running) {
+    logWarn('This bank is already running.');
+    return;
+  }
+
+  const hasStatus = await db.tables.Status.findOne({
+    where: {
+      UID,
+      bankId
+    }
+  });
+  const update = {
+    running: true,
+    lastUpdatedAt: new Date(),
+    balance: 0
+  };
+  if (hasStatus) {
+    await db.tables.Status.update(update, {
+      where: {
+        UID,
+        bankId
+      }
+    });
+  } else {
+    await db.tables.Status.create({
+      ...update,
+      UID,
+      bankId
+    });
   }
 
   try {
@@ -25,37 +64,23 @@ const updater = async (UID, bankId) => {
       await b.login(username, password, options);
       state.set(`${UID}_${bankId}_page`, b);
       session = b;
+
+      await sleep(3000);
     }
 
     const log = await session.getLogs();
     setTimeout(() => updater(UID, bankId), 1000 * 60 * 40);
-
-    const hasStatus = await db.tables.Status.findOne({
-      where: {
-        UID,
-        bankId
-      }
-    });
-
-    const update = {
-      running: true,
-      lastUpdatedAt: new Date(),
-      balance: parseInt(log[0].balance || 0)
-    };
-    if (hasStatus) {
-      await db.tables.Status.update(update, {
+    await db.tables.Status.update(
+      {
+        balance: parseInt(log[0].balance)
+      },
+      {
         where: {
           UID,
           bankId
         }
-      });
-    } else {
-      await db.tables.Status.create({
-        ...update,
-        UID,
-        bankId
-      });
-    }
+      }
+    );
 
     // 比較用ハッシュの配列
     let oldHash = state.get(`${UID}_${bankId}_hash`);

@@ -78,6 +78,13 @@ export const revokeAll = async () => {
         }
       }
     );
+
+    await db.tables.Status.update(
+      {
+        running: false
+      },
+      { where: {} }
+    );
   } catch (e) {
     logError(e);
     throw e;
