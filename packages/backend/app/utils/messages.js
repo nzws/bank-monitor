@@ -5,7 +5,7 @@ const locale = {
   },
   newDeal: {
     title: 'Update: {bankId}',
-    body: 'Name: {name}\nAmount: {amount}\nBalance of bank: {balance}'
+    body: '{name}\nAmount: {amount}\nBalance of bank: {balance}'
   },
   updateError: {
     title: 'Data update failed: {bankId}',

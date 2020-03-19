@@ -24,7 +24,7 @@ const Route = () => {
   authAPI.post('/notification', apiNotification);
   authAPI.post('/restart_updater', apiRestartUpdater);
   authAPI.post('/deposit_rakuten', apiDepositRakuten);
-  authAPI.get('/status', apiStatus);
+  authAPI.post('/status', apiStatus);
 
   authAPI.all('*', notFoundController);
   router.use('/api', auth, authAPI.routes(), authAPI.allowedMethods());
