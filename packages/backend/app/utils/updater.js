@@ -23,23 +23,17 @@ const updater = async (UID, bankId) => {
       bankId
     }
   });
-  if (status.running) {
+  if (status && status.running) {
     logWarn('This bank is already running.');
     return;
   }
 
-  const hasStatus = await db.tables.Status.findOne({
-    where: {
-      UID,
-      bankId
-    }
-  });
   const update = {
     running: true,
     lastUpdatedAt: new Date(),
     balance: 0
   };
-  if (hasStatus) {
+  if (status) {
     await db.tables.Status.update(update, {
       where: {
         UID,
