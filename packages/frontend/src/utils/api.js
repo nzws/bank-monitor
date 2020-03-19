@@ -1,7 +1,7 @@
 import { AsyncStorage, Alert } from 'react-native';
 import { getItemAsync, setItemAsync } from 'expo-secure-store';
 
-const api = async ({ path, method = 'GET', data = {} }) => {
+const api = async ({ path, method = 'POST', data = {} }) => {
   const domain = await AsyncStorage.getItem('domain');
   const token = await getItemAsync('app_token');
 

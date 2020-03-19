@@ -64,7 +64,6 @@ const SignIn = () => {
       .then(token =>
         api({
           path: 'login',
-          method: 'POST',
           data: {
             UID,
             password,

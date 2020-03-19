@@ -85,7 +85,6 @@ const Home = ({ bank: { bankId, bank, display_name } }) => {
         onPress: () => {
           api({
             path: 'api/restart_updater',
-            method: 'POST',
             data: {
               bankId
             }
@@ -100,7 +99,6 @@ const Home = ({ bank: { bankId, bank, display_name } }) => {
     updateStatus(setStatus);
     const apiData = await api({
       path: 'api/history',
-      method: 'POST',
       data: {
         page: pageId || page,
         bankId: bankId === 'all' ? null : bankId

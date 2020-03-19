@@ -7,7 +7,7 @@ const logger = async (ctx, next) => {
   const ms = Date.now() - start;
 
   const isWarn = ms >= 1000 || ctx.status >= 400;
-  const msg = `(${ctx.status}) ${ctx.method} ${ctx.url} - ${ms}ms`;
+  const msg = `(${ctx.status}) ${ctx.method} ${ctx.url} - ${ms}ms - ${ctx.ip}`;
 
   (isWarn ? logWarn : logInfo)(msg);
   if (isWarn) {

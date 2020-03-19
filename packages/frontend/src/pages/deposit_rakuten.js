@@ -61,7 +61,6 @@ const DepositRakuten = ({
           setRunning(true);
           api({
             path: 'api/deposit_rakuten',
-            method: 'POST',
             data: {
               amount,
               bankId

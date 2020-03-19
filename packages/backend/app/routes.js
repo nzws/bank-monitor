@@ -17,8 +17,8 @@ const Route = () => {
   const router = new Router();
 
   const authAPI = new Router();
-  authAPI.get('/auth/logout', authLogout);
-  authAPI.get('/auth/revoke', authRevoke);
+  authAPI.post('/auth/logout', authLogout);
+  authAPI.post('/auth/revoke', authRevoke);
 
   authAPI.post('/history', apiHistory);
   authAPI.post('/notification', apiNotification);

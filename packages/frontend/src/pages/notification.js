@@ -42,7 +42,6 @@ const Notification = () => {
     setIsLoading(true);
     const apiData = await api({
       path: 'api/notification',
-      method: 'POST',
       data: {
         page: pageId || page
       }

@@ -4,8 +4,7 @@ const updateStatus = async setStatus => {
   const data = {};
 
   const { result } = await api({
-    path: 'api/status',
-    method: 'POST'
+    path: 'api/status'
   });
   result.forEach(v => (data[v.bankId] = v));
 
