@@ -85,7 +85,7 @@ const Home = ({ bank: { bankId, bank, display_name } }) => {
 
   const load = async pageId => {
     setIsLoading(true);
-    updateStatus(setStatus);
+    await updateStatus(setStatus);
     const apiData = await api({
       path: 'api/history',
       method: 'POST',
