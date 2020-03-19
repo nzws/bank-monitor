@@ -40,7 +40,6 @@
     "start": "expo start",
     "eject": "expo eject",
     "android:get-hash": "expo fetch:android:hashes",
-    "build:android": "expo build:android",
-    "build": "npm-run-all build:* -p"
+    "pub": "expo publish"
   }
 }
