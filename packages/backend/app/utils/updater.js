@@ -29,27 +29,33 @@ const updater = async (UID, bankId) => {
 
     const log = await session.getLogs();
     setTimeout(() => updater(UID, bankId), 1000 * 60 * 40);
-    db.tables.Status.findOne({
+
+    const hasStatus = await db.tables.Status.findOne({
       where: {
         UID,
         bankId
       }
-    }).then(data => {
-      const update = {
-        running: true,
-        lastUpdatedAt: new Date(),
-        balance: log[0].balance || 0
-      };
-      if (data) {
-        data.update(update);
-      } else {
-        db.tables.Status.create({
-          ...update,
+    });
+
+    const update = {
+      running: true,
+      lastUpdatedAt: new Date(),
+      balance: parseInt(log[0].balance || 0)
+    };
+    if (hasStatus) {
+      await db.tables.Status.update(update, {
+        where: {
           UID,
           bankId
-        });
-      }
-    });
+        }
+      });
+    } else {
+      await db.tables.Status.create({
+        ...update,
+        UID,
+        bankId
+      });
+    }
 
     // 比較用ハッシュの配列
     let oldHash = state.get(`${UID}_${bankId}_hash`);
