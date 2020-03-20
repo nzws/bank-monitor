@@ -94,25 +94,25 @@ const Home = ({ bank: { bankId, bank, display_name } }) => {
             data: {
               bankId
             }
-          });
+          }).then(() => setTimeout(() => load(true), 1000));
         }
       }
     ]);
   };
 
-  const load = async pageId => {
+  const load = async (loadFirst = false) => {
     setIsLoading(true);
     updateStatus(setStatus);
     const apiData = await api({
       path: 'api/history',
       data: {
-        page: pageId || page,
+        page: loadFirst ? 0 : page,
         bankId: bankId === 'all' ? null : bankId
       }
     });
 
     if (apiData.result[0]) {
-      const newData = pageId ? {} : JSON.parse(JSON.stringify(data));
+      const newData = loadFirst ? {} : JSON.parse(JSON.stringify(data));
       apiData.result.forEach(v => {
         const day = new Date(v.date).toLocaleDateString('en-us');
 
@@ -128,11 +128,11 @@ const Home = ({ bank: { bankId, bank, display_name } }) => {
     }
 
     setIsLoading(false);
-    setPage(prev => (pageId || prev) + 1);
+    setPage(prev => (loadFirst ? 0 : prev) + 1);
   };
 
   useEffect(() => {
-    load();
+    load(true);
   }, []);
 
   let balance;
@@ -189,7 +189,7 @@ const Home = ({ bank: { bankId, bank, display_name } }) => {
       <Center>
         <Title fontSize={30}>History</Title>
         {!isLoading && (
-          <RefreshButton onPress={() => load(0)}>
+          <RefreshButton onPress={() => load(true)}>
             <RefreshButtonIcon name="refresh" />
           </RefreshButton>
         )}
@@ -205,7 +205,7 @@ const Home = ({ bank: { bankId, bank, display_name } }) => {
           renderItem={({ item }) => <LogBlock item={item} />}
           renderSectionHeader={({ section }) => <LogTitle section={section} />}
           refreshing={isLoading}
-          onRefresh={() => load(0)}
+          onRefresh={() => load(true)}
         />
 
         {hasNext && (
