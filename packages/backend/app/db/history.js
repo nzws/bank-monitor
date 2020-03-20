@@ -14,7 +14,8 @@ const History = sequelize => {
     name: Sequelize.STRING,
     amount: Sequelize.INTEGER,
     balance: Sequelize.INTEGER,
-    date: Sequelize.DATE
+    date: Sequelize.DATE,
+    data: Sequelize.JSON
   });
 };
 

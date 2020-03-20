@@ -23,7 +23,7 @@ import shadow from '../components/styles/shadow';
 import Container from '../components/container';
 import updateStatus from '../utils/status';
 import Card from '../components/home/card';
-import { theme } from '../../App';
+import colors from '../components/styles/colors';
 
 const Main = styled(View)({
   paddingLeft: 20,
@@ -62,6 +62,12 @@ const RefreshButton = styled(TouchableOpacity)({
 const RefreshButtonIcon = styled(Icon)({
   fontSize: 22,
   color: ({ theme: { secondary } }) => secondary
+});
+
+const STab = styled(ScrollableTab)({
+  backgroundColor: colors.white,
+  ...shadow(),
+  borderBottomWidth: 0
 });
 
 const Home = ({ bank: { bankId, bank, display_name } }) => {
@@ -164,7 +170,7 @@ const Home = ({ bank: { bankId, bank, display_name } }) => {
 
         {bankId !== 'all' && !bankStatus.running && (
           <Button
-            color={theme.warning}
+            color={colors.warning}
             title="Restart updater"
             onPress={restart}
           />
@@ -172,7 +178,7 @@ const Home = ({ bank: { bankId, bank, display_name } }) => {
         {bank === 'rakuten' && (
           <View style={{ marginTop: 10 }}>
             <Button
-              color={theme.success}
+              color={colors.success}
               title="Deposit from jp-bank"
               onPress={() => nav.navigate('DepositToRakuten', { bankId })}
             />
@@ -224,10 +230,7 @@ const HomeTab = () => {
 
   return (
     <MainFooter now="Home" noContent>
-      <Tabs
-        renderTabBar={() => <ScrollableTab />}
-        style={{ marginTop: HeadMargin }}
-      >
+      <Tabs renderTabBar={() => <STab />} style={{ marginTop: HeadMargin }}>
         <Tab heading="All">
           <Home
             bank={{

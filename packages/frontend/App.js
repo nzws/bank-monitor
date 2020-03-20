@@ -10,14 +10,7 @@ import { getItemAsync } from 'expo-secure-store';
 
 import Routes from './src/routes';
 import Container from './src/components/container';
-
-export const theme = {
-  primary: '#34B362',
-  secondary: '#4d4d4d',
-  info: '#4088C7',
-  warning: '#FABC55',
-  danger: '#F96654'
-};
+import colors from './src/components/styles/colors';
 
 if (
   Platform.OS === 'android' &&
@@ -47,7 +40,7 @@ const App = () => {
 
   return (
     <Container.Provider>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={colors}>
         <StatusBar
           barStyle={Platform.OS === 'ios' ? 'dark-content' : 'default'}
         />

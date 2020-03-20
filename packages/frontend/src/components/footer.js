@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Platform } from 'react-native';
 import {
   Container,
   Content,
@@ -8,11 +7,11 @@ import {
   FooterTab,
   Button,
   Icon,
-  Text
+  Text,
+  StyleProvider
 } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
-
-const isAndroid = Platform.OS === 'android';
+import getTheme from '../../native-base-theme/components';
 
 const Btn = ({ icon, page, now, text }) => {
   const nav = useNavigation();
@@ -28,10 +27,7 @@ const Btn = ({ icon, page, now, text }) => {
 
   return (
     <Button vertical active={page === now} onPress={onPress}>
-      <Icon
-        active={page === now}
-        name={`${isAndroid ? 'md' : 'ios'}-${icon}`}
-      />
+      <Icon active={page === now} name={icon} />
       <Text>{text}</Text>
     </Button>
   );
@@ -44,21 +40,23 @@ Btn.propTypes = {
 };
 
 const MainFooter = ({ now, children, noContent = false }) => (
-  <Container>
-    {noContent ? children : <Content>{children}</Content>}
-    <Footer>
-      <FooterTab>
-        <Btn icon="list-box" page="Home" now={now} text="History" />
-        <Btn
-          icon="notifications"
-          page="Notification"
-          now={now}
-          text="Notification"
-        />
-        <Btn icon="settings" page="Setting" now={now} text="Setting" />
-      </FooterTab>
-    </Footer>
-  </Container>
+  <StyleProvider style={getTheme()}>
+    <Container>
+      {noContent ? children : <Content>{children}</Content>}
+      <Footer>
+        <FooterTab>
+          <Btn icon="list-box" page="Home" now={now} text="History" />
+          <Btn
+            icon="notifications"
+            page="Notification"
+            now={now}
+            text="Notification"
+          />
+          <Btn icon="settings" page="Setting" now={now} text="Setting" />
+        </FooterTab>
+      </Footer>
+    </Container>
+  </StyleProvider>
 );
 MainFooter.propTypes = {
   now: PropTypes.string.isRequired,
