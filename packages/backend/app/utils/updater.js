@@ -10,7 +10,7 @@ const objToUniqueStr = (name, amount, balance, date) =>
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
-const updater = async (UID, bankId) => {
+const updater = async (UID, bankId, isFirst = false) => {
   const authData = state.get(`${UID}_auth`);
   if (!authData || !authData[bankId]) {
     logError(`UID: ${UID} auth data is not found`);
@@ -23,7 +23,7 @@ const updater = async (UID, bankId) => {
       bankId
     }
   });
-  if (status && status.running) {
+  if (status && status.running && isFirst) {
     logWarn('This bank is already running.');
     return;
   }

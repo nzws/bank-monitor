@@ -19,7 +19,7 @@ const apiRestartUpdater = async ctx => {
     return errorController(ctx, 400, 'This bank is already running.');
   }
 
-  updater(UID, bankId);
+  updater(UID, bankId, true);
 
   ctx.body = { status: 'success' };
 };

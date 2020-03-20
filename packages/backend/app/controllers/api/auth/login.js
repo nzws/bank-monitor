@@ -11,7 +11,7 @@ import updater from '../../../utils/updater';
 const createUpdater = async UID => {
   const auth = Object.keys(state.get(`${UID}_auth`));
   for (const bankId of auth) {
-    await updater(UID, bankId);
+    await updater(UID, bankId, true);
   }
 };
 
