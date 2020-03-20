@@ -9,7 +9,7 @@ const Op = Sequelize.Op;
 const Auth = db.tables.Auth;
 
 const sendFCM = async (UID, type, options = {}) => {
-  const sub = await db.tables.Auth.findAll({
+  const to = await db.tables.Auth.findAll({
     where: {
       UID,
       deviceToken: {
@@ -19,14 +19,14 @@ const sendFCM = async (UID, type, options = {}) => {
         [Op.is]: null
       }
     }
-  });
-  if (!sub[0]) {
+  }).map(v => v.deviceToken);
+  if (!to[0]) {
     return;
   }
 
   const msg = locale[type];
   const firebaseMessage = {
-    to: sub.map(v => v.deviceToken),
+    to,
     priority: 'high',
     title: localeRunner(msg.title, options),
     body: localeRunner(msg.body, options)
