@@ -24,7 +24,7 @@ const updater = async (UID, bankId, isFirst = false) => {
         bankId
       }
     });
-    if (status && status.running && isFirst) {
+    if (status && status.running && isFirst === true) {
       logWarn('This bank is already running.');
       return;
     }
@@ -151,7 +151,7 @@ const updater = async (UID, bankId, isFirst = false) => {
       }
     })();
 
-    setTimeout(() => updater(UID, bankId), 1000 * 60 * 40);
+    setTimeout(() => updater(UID, bankId, false), 1000 * 60 * 40);
   } catch (e) {
     logError(e);
     db.tables.Status.update(
