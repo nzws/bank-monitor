@@ -14,7 +14,7 @@
   "prettier": "@yuzulabo/prettier-config",
   "devDependencies": {
     "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.8.4",
+    "@babel/core": "^7.9.0",
     "@yuzulabo/eslint-config": "^1.0.1",
     "@yuzulabo/prettier-config": "^1.0.1",
     "babel-eslint": "^10.0.3",
@@ -33,6 +33,7 @@
     "format:js": "eslint --fix \"**/*.js\" --cache --ignore-path .gitignore",
     "format": "npm-run-all format:* -s",
     "b": "yarn workspace @nzws/bank-monitor-backend",
-    "f": "yarn workspace @nzws/bank-monitor-frontend"
+    "f": "yarn workspace @nzws/bank-monitor-frontend",
+    "npmup": "yarn upgrade-interactive"
   }
 }

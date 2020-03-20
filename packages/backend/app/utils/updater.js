@@ -63,7 +63,7 @@ const updater = async (UID, bankId, isFirst = false) => {
     }
 
     const log = await session.getLogs();
-
+    setTimeout(() => updater(UID, bankId, false), 1000 * 60 * 30);
     await db.tables.Status.update(
       {
         balance: parseInt(log[0].balance)
@@ -115,7 +115,8 @@ const updater = async (UID, bankId, isFirst = false) => {
         name: v.name,
         balance: v.balance,
         date: v.date,
-        amount: v.amount * (v.type === 'withdrawal' ? -1 : 1)
+        amount: v.amount * (v.type === 'withdrawal' ? -1 : 1),
+        data: v.addData || {}
       }));
     if (!newLogs[0]) {
       return;
@@ -150,8 +151,6 @@ const updater = async (UID, bankId, isFirst = false) => {
         );
       }
     })();
-
-    setTimeout(() => updater(UID, bankId, false), 1000 * 60 * 40);
   } catch (e) {
     logError(e);
     db.tables.Status.update(
