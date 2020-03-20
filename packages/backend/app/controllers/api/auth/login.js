@@ -7,6 +7,7 @@ import state from '../../../utils/state';
 import { createToken } from '../../../utils/token';
 import { notificationSender } from '../../../utils/notification';
 import updater from '../../../utils/updater';
+import getIP from '../../../utils/ip';
 
 const createUpdater = async UID => {
   const auth = Object.keys(state.get(`${UID}_auth`));
@@ -16,7 +17,8 @@ const createUpdater = async UID => {
 };
 
 const authLogin = async ctx => {
-  const { ip, request, header } = ctx;
+  const { request, header } = ctx;
+  const ip = getIP(ctx);
   const { UID, password, deviceToken } = request.body;
   if (!UID || !password) {
     return errorController(ctx, 400, 'missing value');

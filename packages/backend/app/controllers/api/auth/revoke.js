@@ -1,6 +1,7 @@
 import Sequelize from 'sequelize';
 import db from '../../../db';
 import { notificationSender } from '../../../utils/notification';
+import getIP from '../../../utils/ip';
 
 const Op = Sequelize.Op;
 
@@ -25,7 +26,7 @@ const authRevoke = async ctx => {
   );
 
   notificationSender(UID, 'revoked', {
-    ip: ctx.ip
+    ip: getIP(ctx)
   });
 
   ctx.body = { status: 'success' };

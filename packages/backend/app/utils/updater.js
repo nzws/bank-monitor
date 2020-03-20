@@ -11,44 +11,44 @@ const objToUniqueStr = (name, amount, balance, date) =>
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 const updater = async (UID, bankId, isFirst = false) => {
-  const authData = state.get(`${UID}_auth`);
-  if (!authData || !authData[bankId]) {
-    logError(`UID: ${UID} auth data is not found`);
-    return;
-  }
-
-  const status = await db.tables.Status.findOne({
-    where: {
-      UID,
-      bankId
+  try {
+    const authData = state.get(`${UID}_auth`);
+    if (!authData || !authData[bankId]) {
+      logError(`UID: ${UID} auth data is not found`);
+      return;
     }
-  });
-  if (status && status.running && isFirst) {
-    logWarn('This bank is already running.');
-    return;
-  }
 
-  const update = {
-    running: true,
-    lastUpdatedAt: new Date()
-  };
-  if (status) {
-    await db.tables.Status.update(update, {
+    const status = await db.tables.Status.findOne({
       where: {
         UID,
         bankId
       }
     });
-  } else {
-    await db.tables.Status.create({
-      ...update,
-      UID,
-      bankId,
-      balance: 0
-    });
-  }
+    if (status && status.running && isFirst) {
+      logWarn('This bank is already running.');
+      return;
+    }
 
-  try {
+    const update = {
+      running: true,
+      lastUpdatedAt: new Date()
+    };
+    if (status) {
+      await db.tables.Status.update(update, {
+        where: {
+          UID,
+          bankId
+        }
+      });
+    } else {
+      await db.tables.Status.create({
+        ...update,
+        UID,
+        bankId,
+        balance: 0
+      });
+    }
+
     let session = state.get(`${UID}_${bankId}_page`);
     if (!session) {
       const { bank, username, password, options } = authData[bankId];
@@ -63,7 +63,7 @@ const updater = async (UID, bankId, isFirst = false) => {
     }
 
     const log = await session.getLogs();
-    setTimeout(() => updater(UID, bankId), 1000 * 60 * 40);
+
     await db.tables.Status.update(
       {
         balance: parseInt(log[0].balance)
@@ -150,6 +150,8 @@ const updater = async (UID, bankId, isFirst = false) => {
         );
       }
     })();
+
+    setTimeout(() => updater(UID, bankId), 1000 * 60 * 40);
   } catch (e) {
     logError(e);
     db.tables.Status.update(
