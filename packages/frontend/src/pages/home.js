@@ -119,7 +119,7 @@ const Home = ({ bank: { bankId, bank, display_name } }) => {
         if (!newData[day]) {
           newData[day] = [];
         }
-        newData[day].unshift(v);
+        newData[day].push(v);
       });
       setData(JSON.stringify(newData));
       setHasNext(true);
