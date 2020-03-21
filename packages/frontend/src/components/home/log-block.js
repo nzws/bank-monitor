@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import { currencyToString } from '../../utils/currency';
 import Container from '../container';
+import { descData, useName } from '../../utils/add-data';
 
 const Log = styled(TouchableOpacity)({
   width: '100%',
@@ -39,17 +40,25 @@ const LogBlock = ({ item }) => {
     status: [status]
   } = Container.useContainer();
 
+  const sub = [
+    status[item.bankId]?.display_name,
+    `Balance: ${currencyToString(item.balance)}`
+  ];
+  const desc = descData(item.data?.type);
+  if (desc) {
+    sub.unshift(desc);
+  }
+
   return (
     <Log onPress={() => nav.navigate('Transaction', { item })}>
       <Amount isDeposit={item.amount > 0}>
         {currencyToString(item.amount)}
       </Amount>
       <Name ellipsizeMode="tail" numberOfLines={1}>
-        {item.name}
+        {useName(item)}
       </Name>
       <Sub ellipsizeMode="tail" numberOfLines={1}>
-        {status[item.bankId]?.display_name}・Balance:{' '}
-        {currencyToString(item.balance)}
+        {sub.join('・')}
       </Sub>
     </Log>
   );
