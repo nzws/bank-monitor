@@ -9,7 +9,10 @@ const apiNotification = async ctx => {
   const noti = await db.tables.Notification.findAll({
     limit: PAGE_NUM,
     offset: PAGE_NUM * (page || 0),
-    order: [['createdAt', 'DESC']],
+    order: [
+      ['createdAt', 'DESC'],
+      ['id', 'DESC']
+    ],
     where: { UID }
   });
 

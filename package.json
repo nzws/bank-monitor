@@ -34,6 +34,7 @@
     "format": "npm-run-all format:* -s",
     "b": "yarn workspace @nzws/bank-monitor-backend",
     "f": "yarn workspace @nzws/bank-monitor-frontend",
-    "npmup": "yarn upgrade-interactive --latest"
+    "npmup": "yarn upgrade-interactive --latest",
+    "pub": "del packages\\frontend\\.expo && yarn f expo publish"
   }
 }

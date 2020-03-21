@@ -3,11 +3,10 @@ import Sequelize from 'sequelize';
 const Notification = sequelize => {
   return sequelize.define('notification', {
     id: {
-      allowNull: false,
       primaryKey: true,
       unique: true,
-      type: Sequelize.UUID,
-      defaultValue: Sequelize.UUIDV4
+      type: Sequelize.INTEGER,
+      autoIncrement: true
     },
     UID: Sequelize.STRING,
     type: Sequelize.STRING,

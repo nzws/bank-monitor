@@ -17,7 +17,7 @@ const apiHistory = async ctx => {
     offset: PAGE_NUM * (parseInt(page) || 0),
     order: [
       ['date', 'DESC'],
-      ['createdAt', 'DESC']
+      ['id', 'DESC']
     ],
     where
   });
