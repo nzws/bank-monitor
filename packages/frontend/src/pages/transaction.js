@@ -27,8 +27,8 @@ const Amount = styled(Text)({
 
 const bankName = {
   all: 'Bank Monitor',
-  'jp-bank': 'ゆうちょ銀行',
-  rakuten: '楽天銀行'
+  'jp-bank': 'Japan Post Bank',
+  rakuten: 'Rakuten Bank'
 };
 
 const Transaction = ({
