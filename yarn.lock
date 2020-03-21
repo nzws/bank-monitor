@@ -1936,10 +1936,10 @@
   dependencies:
     infer-owner "^1.0.4"
 
-"@nzws/bank-js@^0.2.2":
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/@nzws/bank-js/-/bank-js-0.2.2.tgz#51426ade969384bcbbfca8b562228bd4fa2e4589"
-  integrity sha512-tj214aOKwPgVkJAgYAA9oJu30UIP+cPyM160gb9womSSaATfl3FWLMv9+85hCIaSelV10wsYI2chQ2BjauYS9A==
+"@nzws/bank-js@^0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@nzws/bank-js/-/bank-js-0.2.3.tgz#6960b619af541a9bc69003df16e5abd0740f8cb7"
+  integrity sha512-9RS3F9AhjottlMRwcDJKmqLUlMpsKAoze8Us5VMpcKLtxCUCEVpBzy4iq+GouKTU4HG4ixO4SdDFFFyA1oV9CQ==
   dependencies:
     log4js "^6.1.2"
     puppeteer "^2.1.1"
