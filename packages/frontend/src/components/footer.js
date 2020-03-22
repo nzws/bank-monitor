@@ -26,7 +26,12 @@ const Btn = ({ icon, page, now, text }) => {
   };
 
   return (
-    <Button vertical active={page === now} onPress={onPress}>
+    <Button
+      vertical
+      active={page === now}
+      onPress={onPress}
+      style={{ backgroundColor: 'transparent' }}
+    >
       <Icon active={page === now} name={icon} />
       <Text>{text}</Text>
     </Button>

@@ -85,7 +85,7 @@ export default (variables /* : * */ = variable) => {
     footerTabTheme = {
       ...footerTabTheme,
       borderTopColor: '#ccc',
-      borderTopWidth: 1
+      borderTopWidth: 0.5
     };
   }
 
