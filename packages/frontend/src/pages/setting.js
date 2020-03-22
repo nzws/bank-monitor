@@ -35,9 +35,10 @@ const Setting = () => {
         onPress: () => {
           api({
             path: 'api/auth/logout'
-          })
-            .then(() => setItemAsync('app_token', ''))
-            .then(() => nav.navigate('SignIn'));
+          });
+          setTimeout(() => {
+            setItemAsync('app_token', '').then(() => nav.navigate('SignIn'));
+          }, 1000);
         }
       }
     ]);
