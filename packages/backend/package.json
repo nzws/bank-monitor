@@ -31,6 +31,5 @@
     "start": "cross-env NODE_ENV=production node build",
     "manage:encrypt": "babel-node scripts/encrypt-config.js",
     "manage:sync": "babel-node scripts/db-sync.js"
-  },
-  "prettier": "@yuzulabo/prettier-config"
+  }
 }

@@ -6,12 +6,10 @@ import logger from './middlewares/logger';
 import headers from './middlewares/headers';
 import route from './routes';
 import { revokeAll } from './utils/token';
-import state from './utils/state';
 
 import * as Sentry from '@sentry/node';
 import { plain_data, SENTRY_ID } from '../config';
 import db from './db';
-import puppeteer from 'puppeteer';
 if (process.env.NODE_ENV !== 'development') {
   Sentry.init({
     dsn: SENTRY_ID,
@@ -34,18 +32,6 @@ if (plain_data) {
 
   await revokeAll();
   logInfo('Database cleanup completed 🧹');
-
-  const browser = await puppeteer.launch({
-    // headless: process.env.NODE_ENV !== 'development',
-    slowMo: 200,
-    args: [
-      '--disable-background-timer-throttling',
-      '--disable-backgrounding-occluded-windows',
-      '--disable-renderer-backgrounding'
-    ]
-  });
-  state.set('browser', browser);
-  logInfo('Puppeteer started ✔');
 
   const app = new Koa();
   app.use(logger);

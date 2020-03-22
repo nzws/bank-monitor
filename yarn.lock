@@ -1944,6 +1944,11 @@
     log4js "^6.1.2"
     puppeteer "^2.1.1"
 
+"@nzws/prettier-config@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@nzws/prettier-config/-/prettier-config-1.0.0.tgz#dc339f987057de6bf2f16563394d9989d55401f1"
+  integrity sha512-pOFfWd0KXAPGlsdoCVvzXQQvXL8hduAfzBtxjPF/+rvmQUga9Dowh2aUOa/2HdBe55FN2zl/RRa49W3/7Cv+vA==
+
 "@react-native-community/cli-debugger-ui@^3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@react-native-community/cli-debugger-ui/-/cli-debugger-ui-3.0.0.tgz#d01d08d1e5ddc1633d82c7d84d48fff07bd39416"
@@ -2629,11 +2634,6 @@
   integrity sha512-E+qS6sxf8bi8ergAsY+5aqf8QxoRiWXjxXZsZNW6/F63CpwNvmpiiAuSRm2VnhV2V/j+J2kuHr42jNCFJ9be2w==
   dependencies:
     eslint-config-prettier "^6.0.0"
-
-"@yuzulabo/prettier-config@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@yuzulabo/prettier-config/-/prettier-config-1.0.1.tgz#1d126284930b337f5ad500f1240ee2af62b0f794"
-  integrity sha512-H03uIPNtCS3RA81u0zs69kP8MWCfk95q5IAVlT6jVMEZv3yy3f6zpwS6duCip4KkyBrd7lQ/TzXmRTURgnQFFg==
 
 abbrev@1:
   version "1.1.1"

@@ -1,4 +1,5 @@
 import bankJs from '@nzws/bank-js';
+import puppeteer from 'puppeteer';
 import db from '../db';
 import state from './state';
 import { logError, logWarn } from './logger';
@@ -11,56 +12,60 @@ const objToUniqueStr = (name, amount, balance, date) =>
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 const updater = async (UID, bankId, isFirst = false) => {
-  try {
-    const authData = state.get(`${UID}_auth`);
-    if (!authData || !authData[bankId]) {
-      logError(`UID: ${UID} auth data is not found`);
-      return;
-    }
+  const authData = state.get(`${UID}_auth`);
+  if (!authData || !authData[bankId]) {
+    logError(`UID: ${UID} auth data is not found`);
+    return;
+  }
 
-    const status = await db.tables.Status.findOne({
+  const status = await db.tables.Status.findOne({
+    where: {
+      UID,
+      bankId
+    }
+  });
+  if (status && status.running && isFirst === true) {
+    logWarn('This bank is already running.');
+    return;
+  }
+
+  const update = {
+    running: true,
+    lastUpdatedAt: new Date()
+  };
+  if (status) {
+    await db.tables.Status.update(update, {
       where: {
         UID,
         bankId
       }
     });
-    if (status && status.running && isFirst === true) {
-      logWarn('This bank is already running.');
-      return;
-    }
+  } else {
+    await db.tables.Status.create({
+      ...update,
+      UID,
+      bankId,
+      balance: 0
+    });
+  }
 
-    const update = {
-      running: true,
-      lastUpdatedAt: new Date()
-    };
-    if (status) {
-      await db.tables.Status.update(update, {
-        where: {
-          UID,
-          bankId
-        }
-      });
-    } else {
-      await db.tables.Status.create({
-        ...update,
-        UID,
-        bankId,
-        balance: 0
-      });
-    }
+  const { bank, username, password, options } = authData[bankId];
 
-    let session = state.get(`${UID}_${bankId}_page`);
-    if (!session) {
-      const { bank, username, password, options } = authData[bankId];
+  const browser = await puppeteer.launch({
+    headless: process.env.NODE_ENV !== 'development',
+    slowMo: 200,
+    args: [
+      '--disable-background-timer-throttling',
+      '--disable-backgrounding-occluded-windows',
+      '--disable-renderer-backgrounding'
+    ]
+  });
+  const session = new bankJs(bank);
 
-      const b = new bankJs(bank);
-      await b.init(state.get('browser'));
-      await b.login(username, password, options);
-      state.set(`${UID}_${bankId}_page`, b);
-      session = b;
-
-      await sleep(3000);
-    }
+  try {
+    await session.init(browser);
+    await session.login(username, password, options);
+    await sleep(3000);
 
     const log = await session.getLogs();
     setTimeout(() => updater(UID, bankId, false), 1000 * 60 * 30);
@@ -169,6 +174,9 @@ const updater = async (UID, bankId, isFirst = false) => {
       bankId,
       message: e.message
     });
+  } finally {
+    await session.close();
+    await browser.close();
   }
 };
 

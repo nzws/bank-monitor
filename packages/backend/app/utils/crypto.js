@@ -3,11 +3,7 @@ import crypto from 'crypto';
 const algorithm = 'aes-256-ctr';
 
 const str2Hash = str =>
-  crypto
-    .createHash('sha512')
-    .update(str)
-    .digest('base64')
-    .slice(0, 32);
+  crypto.createHash('sha512').update(str).digest('base64').slice(0, 32);
 
 export const encrypt = (data, key) => {
   key = str2Hash(key);
