@@ -1,7 +1,7 @@
 export const useName = item => {
   switch (item.data?.type) {
     case 'debit':
-      return item.data?.merchant || '(Unknown shop)';
+      return item.data?.merchant || '(Unknown merchant)';
     case 'auto-payment':
     case 'immediate-transfer':
     case 'pay-easy':
