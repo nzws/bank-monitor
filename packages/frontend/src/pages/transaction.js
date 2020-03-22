@@ -64,11 +64,13 @@ const Transaction = ({
     );
   }
 
+  const name = useName(item);
+
   return (
     <View>
       <TitleView>
-        <Title>{useName(item)}</Title>
-        <Text>{item.name}</Text>
+        <Title>{name}</Title>
+        {name !== item.name && <Text>{item.name}</Text>}
       </TitleView>
 
       <Amount isDeposit={item.amount > 0}>
