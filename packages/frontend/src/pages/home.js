@@ -81,6 +81,7 @@ const Home = ({ bank: { bankId, bank, display_name } }) => {
   const [page, setPage] = useState(0);
   const [hasNext, setHasNext] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [balance, setBalance] = useState(0);
   let [data, setData] = useState('{}');
   data = JSON.parse(data);
 
@@ -138,19 +139,23 @@ const Home = ({ bank: { bankId, bank, display_name } }) => {
     load(true);
   }, []);
 
-  let balance;
   const bankStatus = status[bankId];
   const lastUpdate = bankStatus
     ? new Date(bankStatus.lastUpdatedAt).toLocaleTimeString()
     : '';
-  if (Object.keys(status)[0]) {
-    balance =
-      bankId === 'all'
-        ? Object.values(status)
+  useEffect(() => {
+    if (Object.keys(status)[0]) {
+      if (bankId === 'all') {
+        setBalance(
+          Object.values(status)
             .map(v => v.balance)
             .reduce((a, c) => a + c, 0)
-        : bankStatus.balance;
-  }
+        );
+      } else {
+        setBalance(bankStatus.balance);
+      }
+    }
+  }, [Object.keys(status), bankStatus?.balance]);
 
   return (
     <ScrollView>

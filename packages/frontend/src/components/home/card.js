@@ -34,11 +34,7 @@ const bankName = {
   rakuten: 'Rakuten Bank'
 };
 
-const Card = ({ bank, display_name }) => {
-  if (!bank) {
-    bank = 'all';
-  }
-
+const Card = ({ bank = 'all', display_name }) => {
   return (
     <Styled style={{ backgroundColor: bankColor[bank] }}>
       <Title font={28} weight="bold" numberOfLines={1}>
