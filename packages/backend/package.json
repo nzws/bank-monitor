@@ -11,7 +11,7 @@
     "sequelize-cli": "^5.5.1"
   },
   "dependencies": {
-    "@nzws/bank-js": "^0.2.3",
+    "@nzws/bank-js": "^0.2.4",
     "@sentry/node": "^5.10.2",
     "axios": "^0.19.0",
     "koa": "^2.11.0",
