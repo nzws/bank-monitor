@@ -7,7 +7,8 @@ import {
   Text,
   ScrollView,
   Alert,
-  TouchableOpacity
+  TouchableOpacity,
+  Platform
 } from 'react-native';
 import { Tab, Tabs, ScrollableTab, Icon } from 'native-base';
 import styled from 'styled-components/native';
@@ -66,8 +67,10 @@ const RefreshButtonIcon = styled(Icon)({
 
 const STab = styled(ScrollableTab)({
   backgroundColor: colors.white,
-  ...shadow(),
-  borderBottomWidth: 0
+  ...(Platform.OS === 'android' && {
+    ...shadow(),
+    borderBottomWidth: 0
+  })
 });
 
 const Home = ({ bank: { bankId, bank, display_name } }) => {
