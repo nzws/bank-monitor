@@ -56,7 +56,7 @@ const Balance = styled(Text)({
 const RefreshButton = styled(TouchableOpacity)({
   position: 'absolute',
   top: 28,
-  right: 145
+  right: 20
 });
 
 const RefreshButtonIcon = styled(Icon)({

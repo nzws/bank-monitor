@@ -9,7 +9,7 @@ import shadow from '../../src/components/styles/shadow';
 export default (variables /* : * */ = variable) => {
   const platform = variables.platform;
 
-  const footerTabTheme = {
+  let footerTabTheme = {
     'NativeBase.Button': {
       '.active': {
         'NativeBase.Text': {
@@ -73,11 +73,21 @@ export default (variables /* : * */ = variable) => {
     flexDirection: 'row',
     justifyContent: 'space-between',
     flex: 1,
-    alignSelf: 'stretch',
-    ...shadow()
-    // borderTopColor: '#ccc',
-    // borderTopWidth: 1
+    alignSelf: 'stretch'
   };
+
+  if (Platform.OS === PLATFORM.ANDROID) {
+    footerTabTheme = {
+      ...footerTabTheme,
+      ...shadow()
+    };
+  } else {
+    footerTabTheme = {
+      ...footerTabTheme,
+      borderTopColor: '#ccc',
+      borderTopWidth: 1
+    };
+  }
 
   return footerTabTheme;
 };
