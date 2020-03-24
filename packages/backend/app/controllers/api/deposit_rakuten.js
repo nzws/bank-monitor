@@ -19,19 +19,19 @@ const apiDepositRakuten = async ctx => {
 
   const { bank, username, password, options } = authData[bankId];
 
+  const browser = await puppeteer.launch({
+    headless: process.env.NODE_ENV !== 'development',
+    slowMo: 200,
+    args: [
+      '--disable-background-timer-throttling',
+      '--disable-backgrounding-occluded-windows',
+      '--disable-renderer-backgrounding'
+    ]
+  });
+  const session = new bankJs(bank);
+
   (async () => {
     try {
-      const browser = await puppeteer.launch({
-        headless: process.env.NODE_ENV !== 'development',
-        slowMo: 200,
-        args: [
-          '--disable-background-timer-throttling',
-          '--disable-backgrounding-occluded-windows',
-          '--disable-renderer-backgrounding'
-        ]
-      });
-      const session = new bankJs(bank);
-
       await session.init(browser);
       await session.login(username, password, options);
       await sleep(3000);
@@ -59,6 +59,9 @@ const apiDepositRakuten = async ctx => {
         bankId,
         message: e.message
       });
+    } finally {
+      await session.close();
+      await browser.close();
     }
   })();
 
