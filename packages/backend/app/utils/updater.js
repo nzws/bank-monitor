@@ -89,7 +89,8 @@ const updater = async (UID, bankId, isFirst = false) => {
     // 比較用ハッシュの配列
     let oldHash = state.get(`${UID}_${bankId}_hash`);
     if (!oldHash) {
-      const hist = (
+      const hist = {};
+      (
         await db.tables.History.findAll({
           limit: 100,
           order: [
@@ -101,7 +102,10 @@ const updater = async (UID, bankId, isFirst = false) => {
             bankId
           }
         })
-      ).map(v => objToUniqueStr(v.name, v.amount, v.balance, v.date, v.data));
+      ).forEach(v => {
+        const key = objToUniqueStr(v.name, v.amount, v.balance, v.date, v.data);
+        hist[key] = v;
+      });
       state.set(`${UID}_${bankId}_hash`, hist);
       oldHash = hist;
     }
@@ -110,7 +114,7 @@ const updater = async (UID, bankId, isFirst = false) => {
     const newLogs = log
       .filter(
         v =>
-          oldHash.indexOf(
+          Object.keys(oldHash).indexOf(
             objToUniqueStr(
               v.name,
               v.amount * (v.type === 'withdrawal' ? -1 : 1),
@@ -129,16 +133,69 @@ const updater = async (UID, bankId, isFirst = false) => {
         amount: v.amount * (v.type === 'withdrawal' ? -1 : 1),
         data: v.addData || {}
       }));
+
+    // デビットの場合、取引名=承認番号であるが、
+    // 電文が銀行に届いてマーチャント名が更新されている可能性があるため、
+    // 同じ取引番号&金額でマーチャント名が異なる場合、更新を行う
+    const updatedMerchant = log.filter(v => {
+      const hashId = objToUniqueStr(
+        v.name,
+        v.amount * (v.type === 'withdrawal' ? -1 : 1),
+        v.balance,
+        v.date,
+        v.addData
+      );
+      if (
+        Object.keys(oldHash).indexOf(hashId) === -1 ||
+        v?.addData?.type !== 'debit'
+      ) {
+        return false;
+      }
+
+      return oldHash[hashId]?.data?.merchant !== v?.addData?.merchant;
+    });
+
+    if (updatedMerchant[0]) {
+      for (const d of updatedMerchant) {
+        await db.tables.History.update(
+          {
+            data: d.addData
+          },
+          {
+            where: {
+              UID,
+              bankId,
+              name: d.name,
+              balance: d.balance,
+              date: d.date,
+              amount: d.amount * (d.type === 'withdrawal' ? -1 : 1)
+            }
+          }
+        );
+
+        await notificationSender(
+          UID,
+          'merchant_updated',
+          {
+            bankId,
+            name: d.name,
+            amount: currencyToString(d.amount),
+            balance: currencyToString(d.balance)
+          },
+          'notification'
+        );
+      }
+    }
+
     if (!newLogs[0]) {
       return;
     }
 
     // ハッシュ更新
-    oldHash.push(
-      ...newLogs.map(v =>
-        objToUniqueStr(v.name, v.amount, v.balance, v.date, v.data)
-      )
-    );
+    newLogs.forEach(v => {
+      const key = objToUniqueStr(v.name, v.amount, v.balance, v.date, v.data);
+      oldHash[key] = v;
+    });
     state.set(`${UID}_${bankId}_hash`, oldHash);
 
     // bank-jsから降ってくるデータのソートは 新しい→古い なので 古い→新しい にする

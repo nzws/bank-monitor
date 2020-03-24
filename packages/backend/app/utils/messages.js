@@ -26,6 +26,10 @@ const locale = {
   ping: {
     title: 'Ping!',
     body: '{message}'
+  },
+  merchant_updated: {
+    title: 'The merchant name has been updated: {bankId}',
+    body: ' - {name}\n - Amount: {amount}\n - Balance of bank: {balance}'
   }
 };
 
