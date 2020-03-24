@@ -51,7 +51,7 @@ const DepositRakuten = ({
   const bankStatus = status[bankId];
 
   const onPress = () => {
-    Alert.alert('Sign out', 'Are you sure?', [
+    Alert.alert('Request', 'Are you sure? (It takes a few minutes.)', [
       {
         text: 'Cancel'
       },
@@ -65,19 +65,7 @@ const DepositRakuten = ({
               amount,
               bankId
             }
-          }).then(({ result: { amount, fee, schedule } }) => {
-            const date = new Date(schedule).toLocaleDateString(null, {
-              month: 'long',
-              day: 'numeric'
-            });
-            Alert.alert(
-              'Result',
-              `Amount: ${currencyToString(amount)}\nFee: ${currencyToString(
-                fee
-              )}\nSchedule: ${date}`
-            );
-            nav.navigate('Home');
-          });
+          }).then(() => nav.navigate('Home'));
         }
       }
     ]);
@@ -114,7 +102,7 @@ const DepositRakuten = ({
         </Desc>
 
         <Button
-          title={running ? 'Running...' : 'Add'}
+          title={running ? 'Running...' : 'Request'}
           onPress={onPress}
           disabled={running}
         />

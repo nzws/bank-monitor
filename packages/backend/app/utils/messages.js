@@ -1,11 +1,11 @@
 const locale = {
   login: {
     title: 'Security alert: new login',
-    body: 'IP: {ip}\nDevice: {device}'
+    body: ' - IP: {ip}\n - Device: {device}'
   },
   newDeal: {
     title: 'Update: {bankId}',
-    body: '{name}\nAmount: {amount}\nBalance of bank: {balance}'
+    body: ' - {name}\n - Amount: {amount}\n - Balance of bank: {balance}'
   },
   updateError: {
     title: 'Data update failed: {bankId}',
@@ -16,8 +16,12 @@ const locale = {
     body: 'IP: {ip}'
   },
   deposit_requested_rakuten: {
-    title: 'A deposit has been requested for {bankId}',
-    body: 'Amount: {amount}'
+    title: 'Your deposit request has been sent: {bankId}',
+    body: ' - Amount: {amount}\n - Fee: {fee}\n - Schedule: {schedule}'
+  },
+  deposit_requested_rakuten_failed: {
+    title: 'Error: Your deposit request could not be sent: {bankId}',
+    body: '{message}'
   }
 };
 
