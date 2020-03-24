@@ -5,6 +5,8 @@ import state from '../../utils/state';
 import { notificationSender } from '../../utils/notification';
 import { logError } from '../../utils/logger';
 
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
 const apiDepositRakuten = async ctx => {
   const { bankId, amount } = ctx.request.body;
   const UID = ctx.state.auth.UID;
@@ -30,6 +32,7 @@ const apiDepositRakuten = async ctx => {
 
     await session.init(browser);
     await session.login(username, password, options);
+    await sleep(3000);
 
     const logs = await session.action('DEPOSIT_FROM_JPBANK', {
       amount,
