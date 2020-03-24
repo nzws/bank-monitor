@@ -165,10 +165,10 @@ const updater = async (UID, bankId, isFirst = false) => {
             where: {
               UID,
               bankId,
-              name: d.name,
               balance: d.balance,
               date: d.date,
-              amount: d.amount * (d.type === 'withdrawal' ? -1 : 1)
+              amount: d.amount * (d.type === 'withdrawal' ? -1 : 1),
+              'data.transactionNo': d.addData.transactionNo
             }
           }
         );
