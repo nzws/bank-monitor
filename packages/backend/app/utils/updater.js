@@ -6,8 +6,13 @@ import { logError, logWarn } from './logger';
 import { notificationSender } from './notification';
 import { currencyToString } from './currency';
 
-const objToUniqueStr = (name, amount, balance, date) =>
-  name + amount + balance + new Date(date).toLocaleString();
+const objToUniqueStr = (name, amount, balance, date, optionData) => {
+  if (optionData.type === 'debit' && optionData.transactionNo) {
+    name = optionData.transactionNo;
+  }
+
+  return [name, amount, balance, new Date(date).toLocaleString()].join('/');
+};
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -96,7 +101,7 @@ const updater = async (UID, bankId, isFirst = false) => {
             bankId
           }
         })
-      ).map(v => objToUniqueStr(v.name, v.amount, v.balance, v.date));
+      ).map(v => objToUniqueStr(v.name, v.amount, v.balance, v.date, v.data));
       state.set(`${UID}_${bankId}_hash`, hist);
       oldHash = hist;
     }
@@ -110,7 +115,8 @@ const updater = async (UID, bankId, isFirst = false) => {
               v.name,
               v.amount * (v.type === 'withdrawal' ? -1 : 1),
               v.balance,
-              v.date
+              v.date,
+              v.addData
             )
           ) === -1
       )
