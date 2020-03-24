@@ -64,7 +64,7 @@ export const notificationSender = async (
   sendTo = 'all'
 ) => {
   if (sendTo === 'all' || sendTo === 'push') {
-    sendFCM(UID, type, options);
+    await sendFCM(UID, type, options);
   }
 
   if (sendTo === 'all' || sendTo === 'notification') {
