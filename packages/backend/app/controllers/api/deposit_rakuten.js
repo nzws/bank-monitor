@@ -41,10 +41,7 @@ const apiDepositRakuten = async ctx => {
         PIN: authData[bankId].PIN
       });
 
-      const date = new Date(e.schedule).toLocaleDateString(null, {
-        month: 'long',
-        day: 'numeric'
-      });
+      const date = new Date(e.schedule).toDateString();
 
       await notificationSender(UID, 'deposit_requested_rakuten', {
         bankId,
