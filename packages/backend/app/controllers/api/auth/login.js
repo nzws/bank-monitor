@@ -37,11 +37,16 @@ const authLogin = async ctx => {
     logWarn('password is incorrect');
   }
 
+  const { description } = platform.parse(header['user-agent']);
   if (!data || !encrypted) {
+    await notificationSender(UID, 'login_failed', {
+      device: description,
+      ip
+    });
+
     return errorController(ctx, 403, 'user or password is incorrect');
   }
 
-  const { description } = platform.parse(header['user-agent']);
   notificationSender(UID, 'login', {
     device: description,
     ip
