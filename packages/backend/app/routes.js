@@ -12,6 +12,7 @@ import apiNotification from './controllers/api/notification';
 import apiRestartUpdater from './controllers/api/restart_updater';
 import apiDepositRakuten from './controllers/api/deposit_rakuten';
 import apiStatus from './controllers/api/status';
+import apiPing from './controllers/api/ping';
 
 const Route = () => {
   const router = new Router();
@@ -25,6 +26,7 @@ const Route = () => {
   authAPI.post('/restart_updater', apiRestartUpdater);
   authAPI.post('/deposit_rakuten', apiDepositRakuten);
   authAPI.post('/status', apiStatus);
+  authAPI.post('/ping', apiPing);
 
   authAPI.all('*', notFoundController);
   router.use('/api', auth, authAPI.routes(), authAPI.allowedMethods());

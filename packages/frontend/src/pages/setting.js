@@ -3,6 +3,7 @@ import { Text, Alert } from 'react-native';
 import { List, ListItem } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
 import { setItemAsync } from 'expo-secure-store';
+import prompt from 'react-native-prompt-android';
 import MainFooter from '../components/footer';
 import api from '../utils/api';
 
@@ -44,6 +45,31 @@ const Setting = () => {
     ]);
   };
 
+  const ping = () => {
+    prompt(
+      'Send a test message',
+      'to your devices',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Send',
+          onPress: message => {
+            api({
+              path: 'api/ping',
+              data: {
+                message
+              }
+            });
+          }
+        }
+      ],
+      {
+        cancelable: true,
+        defaultValue: 'pong'
+      }
+    );
+  };
+
   return (
     <MainFooter now="Setting">
       <List>
@@ -52,6 +78,9 @@ const Setting = () => {
         </ListItem>
         <ListItem onPress={signOut}>
           <Text>Sign out</Text>
+        </ListItem>
+        <ListItem onPress={ping}>
+          <Text>Send a test message to your devices</Text>
         </ListItem>
       </List>
     </MainFooter>

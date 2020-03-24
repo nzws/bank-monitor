@@ -22,6 +22,10 @@ const locale = {
   deposit_requested_rakuten_failed: {
     title: 'Error: Your deposit request could not be sent: {bankId}',
     body: '{message}'
+  },
+  ping: {
+    title: 'Ping!',
+    body: '{message}'
   }
 };
 
