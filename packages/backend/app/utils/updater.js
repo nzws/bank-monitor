@@ -135,7 +135,9 @@ const updater = async (UID, bankId, isFirst = false) => {
 
     // ハッシュ更新
     oldHash.push(
-      ...newLogs.map(v => objToUniqueStr(v.name, v.amount, v.balance, v.date))
+      ...newLogs.map(v =>
+        objToUniqueStr(v.name, v.amount, v.balance, v.date, v.data)
+      )
     );
     state.set(`${UID}_${bankId}_hash`, oldHash);
 
