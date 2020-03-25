@@ -159,6 +159,7 @@ const updater = async (UID, bankId, isFirst = false) => {
       for (const d of updatedMerchant) {
         await db.tables.History.update(
           {
+            name: d.name,
             data: d.addData
           },
           {
