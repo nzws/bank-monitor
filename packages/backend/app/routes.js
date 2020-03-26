@@ -6,6 +6,7 @@ import auth from './middlewares/auth';
 import authLogin from './controllers/api/auth/login';
 import authLogout from './controllers/api/auth/logout';
 import authRevoke from './controllers/api/auth/revoke';
+import authRelogin from './controllers/api/auth/re-login';
 
 import apiHistory from './controllers/api/history';
 import apiNotification from './controllers/api/notification';
@@ -19,6 +20,7 @@ const Route = () => {
 
   const authAPI = new Router();
   authAPI.post('/auth/logout', authLogout);
+  authAPI.post('/auth/re-login', authRelogin);
   authAPI.post('/auth/revoke', authRevoke);
 
   authAPI.post('/history', apiHistory);

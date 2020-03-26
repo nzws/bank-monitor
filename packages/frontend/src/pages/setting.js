@@ -3,9 +3,9 @@ import { Text, Alert } from 'react-native';
 import { List, ListItem } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
 import { setItemAsync } from 'expo-secure-store';
-import prompt from 'react-native-prompt-android';
 import MainFooter from '../components/footer';
 import api from '../utils/api';
+import prompt from '../utils/prompt';
 
 const Setting = () => {
   const nav = useNavigation();
@@ -49,30 +49,42 @@ const Setting = () => {
     prompt(
       'Send a test message',
       'to your devices',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        {
-          text: 'Send',
-          onPress: message => {
-            api({
-              path: 'api/ping',
-              data: {
-                message
-              }
-            });
+      message => {
+        api({
+          path: 'api/ping',
+          data: {
+            message
           }
-        }
-      ],
-      {
-        cancelable: true,
-        defaultValue: 'pong'
-      }
+        });
+      },
+      false,
+      nav
+    );
+  };
+
+  const reLogin = () => {
+    prompt(
+      'Re sign in',
+      'Encrypt password:',
+      password => {
+        api({
+          path: 'api/auth/re-login',
+          data: {
+            password
+          }
+        });
+      },
+      true,
+      nav
     );
   };
 
   return (
     <MainFooter now="Setting">
       <List>
+        <ListItem onPress={reLogin}>
+          <Text>Re sign in</Text>
+        </ListItem>
         <ListItem onPress={revoke}>
           <Text>Revoke all token of my account</Text>
         </ListItem>

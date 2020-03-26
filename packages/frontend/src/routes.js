@@ -10,6 +10,7 @@ import Transaction from './pages/transaction';
 import Container from './components/container';
 import updateStatus from './utils/status';
 import DepositRakuten from './pages/deposit_rakuten';
+import Prompt from './pages/prompt';
 
 const Stack = createStackNavigator();
 
@@ -49,6 +50,7 @@ const Routes = ({ alreadySignIn }) => {
       <Stack.Screen name="SignIn" component={SignIn} />
       <Stack.Screen name="Transaction" component={Transaction} />
       <Stack.Screen name="DepositToRakuten" component={DepositRakuten} />
+      <Stack.Screen name="Prompt" component={Prompt} />
     </Stack.Navigator>
   );
 };

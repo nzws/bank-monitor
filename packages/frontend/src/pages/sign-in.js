@@ -11,7 +11,7 @@ import { Center, Title } from '../components/styles/layout';
 import api from '../utils/api';
 
 const StyledContainer = styled(Center)({
-  paddingTop: 150
+  paddingTop: 50
 });
 
 const Input = styled(TextInput)({

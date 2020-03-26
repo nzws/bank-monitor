@@ -68,17 +68,6 @@ export const revokeToken = async (token = '') => {
 
 export const revokeAll = async () => {
   try {
-    await db.tables.Auth.update(
-      { isDeleted: new Date() },
-      {
-        where: {
-          isDeleted: {
-            [Op.is]: null
-          }
-        }
-      }
-    );
-
     await db.tables.Status.update(
       {
         running: false

@@ -1,10 +1,19 @@
 import db from '../../db';
 import { errorController } from './common';
 import updater from '../../utils/updater';
+import state from '../../utils/state';
 
 const apiRestartUpdater = async ctx => {
   const { bankId } = ctx.request.body;
   const UID = ctx.state.auth.UID;
+
+  if (!state.get(`${UID}_auth`)) {
+    return errorController(
+      ctx,
+      503,
+      'Please re-enter the encryption password.'
+    );
+  }
 
   const status = await db.tables.Status.findOne({
     where: {
