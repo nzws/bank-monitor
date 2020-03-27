@@ -6062,10 +6062,10 @@ expo-font@^8.0.0, expo-font@~8.0.0:
   dependencies:
     fontfaceobserver "^2.1.0"
 
-expo-google-sign-in@~8.0.0:
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/expo-google-sign-in/-/expo-google-sign-in-8.0.0.tgz#3cf50b255a947045a6961fc798978ed0aaa13251"
-  integrity sha512-QLiqrfhT9cFC1VyDA3qW0XOeHP3Q1eRRl/3OoCKjXssTLqah0RwH4v1d4w3gvqzRKW/jHvyFqAl7nGdY0pKUuA==
+expo-google-sign-in@~8.1.0:
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/expo-google-sign-in/-/expo-google-sign-in-8.1.0.tgz#87f609f9250fea02ea5373286381f95f99c46187"
+  integrity sha512-ek/na9xL4yS76lqGwm79i1LLdqw8VDbr5ywd9l+ffR68r5MSIS18iz0cZVPsLH5W0V6QT8FnzqMqW0luFMCzAg==
   dependencies:
     invariant "^2.2.4"
 
