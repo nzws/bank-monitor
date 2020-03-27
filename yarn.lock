@@ -6096,10 +6096,10 @@ expo-permissions@^8.0.0, expo-permissions@~8.0.0:
   resolved "https://registry.yarnpkg.com/expo-permissions/-/expo-permissions-8.0.0.tgz#5a45e8451dd7ff37c9e6ce5e2447818372547813"
   integrity sha512-GHTRmwh1rd1b0FcibluPFu93NNQyl9b1anBBDVPmomoo9Prz7kDcO5p2hFqM99r896yvAUSe0fPloPKUq4g/1A==
 
-expo-secure-store@~8.0.0:
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/expo-secure-store/-/expo-secure-store-8.0.0.tgz#09b0a3faf83569fe0160464ec33455576606c6a1"
-  integrity sha512-IzzCZ6S1PfIFhpZf5imjGU8uslGyFZz80neuuJCOv8N1hugwYl6ncqrokuOK8d1ftrxVSEfGfwsN+8+m0iTZGA==
+expo-secure-store@~8.1.0:
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/expo-secure-store/-/expo-secure-store-8.1.0.tgz#1dcc4705c5264c828592a83842b8be8bbfb5f77f"
+  integrity sha512-EjCx9M2nH7iW3eNOjXl0I7oPypI0es6OStZakimR2iD8riLZp9LYHTj+39Iuz2o1m3OKi+bpwr3cHL52DxcDnA==
 
 expo-sqlite@~8.0.0:
   version "8.0.0"
