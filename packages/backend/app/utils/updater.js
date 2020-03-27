@@ -72,7 +72,10 @@ const updater = async (UID, bankId, isFirst = false) => {
     await session.login(username, password, options);
     await sleep(3000);
 
-    const log = await session.getLogs();
+    const log = await session.getLogs().map(v => ({
+      ...v,
+      data: v.addData
+    }));
     setTimeout(() => updater(UID, bankId, false), 1000 * 60 * 30);
     await db.tables.Status.update(
       {
@@ -120,7 +123,7 @@ const updater = async (UID, bankId, isFirst = false) => {
               v.amount * (v.type === 'withdrawal' ? -1 : 1),
               v.balance,
               v.date,
-              v.addData
+              v.data
             )
           ) === -1
       )
@@ -131,7 +134,7 @@ const updater = async (UID, bankId, isFirst = false) => {
         balance: v.balance,
         date: v.date,
         amount: v.amount * (v.type === 'withdrawal' ? -1 : 1),
-        data: v.addData || {}
+        data: v.data || {}
       }));
 
     // デビットの場合、取引名=承認番号であるが、
@@ -143,24 +146,30 @@ const updater = async (UID, bankId, isFirst = false) => {
         v.amount * (v.type === 'withdrawal' ? -1 : 1),
         v.balance,
         v.date,
-        v.addData
+        v.data
       );
       if (
         Object.keys(oldHash).indexOf(hashId) === -1 ||
-        v?.addData?.type !== 'debit'
+        v?.data?.type !== 'debit'
       ) {
         return false;
       }
 
-      return oldHash[hashId]?.data?.merchant !== v?.addData?.merchant;
+      return oldHash[hashId]?.data?.merchant !== v?.data?.merchant;
     });
 
     if (updatedMerchant[0]) {
+      updatedMerchant.forEach(v => {
+        const key = objToUniqueStr(v.name, v.amount, v.balance, v.date, v.data);
+        oldHash[key] = v;
+      });
+      state.set(`${UID}_${bankId}_hash`, oldHash);
+
       for (const d of updatedMerchant) {
         await db.tables.History.update(
           {
             name: d.name,
-            data: d.addData
+            data: d.data
           },
           {
             where: {
@@ -169,7 +178,7 @@ const updater = async (UID, bankId, isFirst = false) => {
               balance: d.balance,
               date: d.date,
               amount: d.amount * (d.type === 'withdrawal' ? -1 : 1),
-              'data.transactionNo': d.addData.transactionNo
+              'data.transactionNo': d.data.transactionNo
             }
           }
         );
