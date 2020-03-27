@@ -5,6 +5,11 @@ const apiStatus = async ctx => {
   const UID = ctx.state.auth.UID;
   const authData = state.get(`${UID}_auth`);
 
+  if (!authData) {
+    ctx.body = { result: [] };
+    return;
+  }
+
   const status = await db.tables.Status.findAll({
     where: { UID }
   }).map(v => {

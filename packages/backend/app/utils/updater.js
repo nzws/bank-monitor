@@ -72,7 +72,7 @@ const updater = async (UID, bankId, isFirst = false) => {
     await session.login(username, password, options);
     await sleep(3000);
 
-    const log = await session.getLogs().map(v => ({
+    const log = (await session.getLogs()).map(v => ({
       ...v,
       data: v.addData
     }));
