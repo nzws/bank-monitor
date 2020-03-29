@@ -96,10 +96,7 @@ const updater = async (UID, bankId, isFirst = false) => {
       (
         await db.tables.History.findAll({
           limit: 100,
-          order: [
-            ['date', 'DESC'],
-            ['createdAt', 'DESC']
-          ],
+          order: [['id', 'DESC']],
           where: {
             UID,
             bankId
@@ -107,7 +104,7 @@ const updater = async (UID, bankId, isFirst = false) => {
         })
       ).forEach(v => {
         const key = objToUniqueStr(v.name, v.amount, v.balance, v.date, v.data);
-        hist[key] = v;
+        hist[key] = v.dataValues;
       });
       state.set(`${UID}_${bankId}_hash`, hist);
       oldHash = hist;
@@ -160,7 +157,13 @@ const updater = async (UID, bankId, isFirst = false) => {
 
     if (updatedMerchant[0]) {
       updatedMerchant.forEach(v => {
-        const key = objToUniqueStr(v.name, v.amount, v.balance, v.date, v.data);
+        const key = objToUniqueStr(
+          v.name,
+          v.amount * (v.type === 'withdrawal' ? -1 : 1),
+          v.balance,
+          v.date,
+          v.data
+        );
         oldHash[key] = v;
       });
       state.set(`${UID}_${bankId}_hash`, oldHash);
