@@ -5,13 +5,13 @@
     "privacy": "unlisted",
     "sdkVersion": "36.0.0",
     "platforms": ["ios", "android", "web"],
-    "version": "0.1.0",
+    "version": "0.1.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "resizeMode": "cover",
+      "backgroundColor": "#50A7C2"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -34,6 +34,11 @@
         "googleSignIn": {
           "certificateHash": "70:37:7A:33:24:C6:7E:B5:B2:51:6C:1F:67:F1:00:43:87:3E:9C:97"
         }
+      },
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/foreground.png",
+        "backgroundImage": "./assets/background.png",
+        "backgroundColor": "#50A7C2"
       }
     },
     "packagerOpts": {
