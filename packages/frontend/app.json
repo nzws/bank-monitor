@@ -7,11 +7,11 @@
     "platforms": ["ios", "android", "web"],
     "version": "0.1.1",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/icon_panel.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "cover",
-      "backgroundColor": "#50A7C2"
+      "backgroundColor": "#34B362"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -36,9 +36,9 @@
         }
       },
       "adaptiveIcon": {
-        "foregroundImage": "./assets/foreground.png",
-        "backgroundImage": "./assets/background.png",
-        "backgroundColor": "#50A7C2"
+        "foregroundImage": "./assets/bank_monitor_foreground.png",
+        "backgroundImage": "./assets/bank_monitor_background.png",
+        "backgroundColor": "#34B362"
       }
     },
     "packagerOpts": {
