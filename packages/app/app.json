@@ -4,7 +4,7 @@
     "slug": "bank-monitor",
     "privacy": "unlisted",
     "sdkVersion": "36.0.0",
-    "platforms": ["ios", "android", "web"],
+    "platforms": ["ios", "android"],
     "version": "0.1.1",
     "orientation": "portrait",
     "icon": "./assets/icon_panel.png",

@@ -33,7 +33,8 @@
     "format:js": "eslint --fix \"**/*.js\" --cache --ignore-path .gitignore",
     "format": "npm-run-all format:* -s",
     "b": "yarn workspace @nzws/bank-monitor-backend",
-    "f": "yarn workspace @nzws/bank-monitor-frontend",
+    "a": "yarn workspace @nzws/bank-monitor-app",
+    "w": "yarn workspace @nzws/bank-monitor-web",
     "npmup": "yarn upgrade-interactive --latest",
     "pub": "del packages\\frontend\\.expo && yarn f expo publish"
   }
