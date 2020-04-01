@@ -3,7 +3,6 @@
     "name": "Bank Monitor",
     "slug": "bank-monitor-web",
     "privacy": "unlisted",
-    "sdkVersion": "36.0.0",
     "platforms": ["web"],
     "version": "0.1.1",
     "orientation": "portrait",

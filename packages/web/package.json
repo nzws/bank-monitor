@@ -5,19 +5,19 @@
   "private": true,
   "main": "__generated__/AppEntry.js",
   "dependencies": {
-    "expo": "~37.0.3",
+    "expo": "^37.0.0",
     "polished": "^3.5.1",
     "prop-types": "^15.7.2",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz",
-    "react-native-web": "~0.12.2",
+    "react": "16.9.0",
+    "react-dom": "16.9.0",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-37.0.0.tar.gz",
+    "react-native-web": "^0.11.7",
     "styled-components": "^5.0.1",
     "unstated-next": "^1.1.0"
   },
   "devDependencies": {
     "@dotplants/expo-yarn-workspaces": "^1.2.1",
-    "babel-preset-expo": "~8.1.0",
+    "babel-preset-expo": "^8.1.0",
     "eslint-plugin-react": "^7.18.3",
     "expo-cli": "^3.17.5"
   },
