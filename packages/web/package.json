@@ -5,6 +5,7 @@
   "private": true,
   "main": "__generated__/AppEntry.js",
   "dependencies": {
+    "@styled-icons/feather": "^10.0.0",
     "expo": "^37.0.0",
     "polished": "^3.5.1",
     "prop-types": "^15.7.2",
@@ -12,7 +13,9 @@
     "react-dom": "16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-37.0.0.tar.gz",
     "react-native-web": "^0.11.7",
+    "react-router-dom": "^5.1.2",
     "styled-components": "^5.0.1",
+    "styled-normalize": "^8.0.7",
     "unstated-next": "^1.1.0"
   },
   "devDependencies": {
@@ -23,7 +26,7 @@
   },
   "scripts": {
     "expo-link": "expo-yarn-workspaces postinstall",
-    "start": "expo start",
+    "start": "expo start --web",
     "eject": "expo eject"
   }
 }

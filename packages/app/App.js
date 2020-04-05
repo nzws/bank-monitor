@@ -12,6 +12,7 @@ import Routes from './src/routes';
 import Container from './src/components/container';
 import colors from './src/components/styles/colors';
 
+console.disableYellowBox = true;
 if (
   Platform.OS === 'android' &&
   UIManager.setLayoutAnimationEnabledExperimental
