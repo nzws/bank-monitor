@@ -25,7 +25,8 @@ jobs:
         run: |
           sudo swapoff -a
           sudo rm -f /swapfile
-          sudo apt clean
+          sudo apt-get clean
+          sudo apt-get autoremove
 
       - name: Use Node.js ${{ env.node-version }}
         uses: actions/setup-node@v1
