@@ -16,7 +16,7 @@ const objToUniqueStr = (name, amount, balance, date, optionData) => {
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
-const updater = async (UID, bankId, isFirst = false) => {
+const updater = async (UID, bankId, isFirst = false, retry = 0) => {
   const authData = state.get(`${UID}_auth`);
   if (!authData || !authData[bankId]) {
     logError(`UID: ${UID} auth data is not found`);
@@ -67,15 +67,48 @@ const updater = async (UID, bankId, isFirst = false) => {
   });
   const session = new bankJs(bank);
 
+  let log;
   try {
     await session.init(browser);
     await session.login(username, password, options);
     await sleep(3000);
 
-    const log = (await session.getLogs()).map(v => ({
+    log = (await session.getLogs()).map(v => ({
       ...v,
       data: v.addData
     }));
+  } catch (e) {
+    logError(e);
+    db.tables.Status.update(
+      {
+        running: false,
+        lastUpdatedAt: new Date()
+      },
+      {
+        where: {
+          UID,
+          bankId
+        }
+      }
+    );
+
+    let runRetry = false;
+    if (retry < 1) {
+      runRetry = true;
+      updater(UID, bankId, isFirst, retry + 1).catch(void 0);
+    }
+    await notificationSender(UID, 'updateError', {
+      bankId,
+      message: `${e.message} / retry: ${runRetry}, ${retry}`
+    });
+  } finally {
+    await session.close();
+    await browser.close();
+  }
+
+  try {
+    if (!log) return;
+
     setTimeout(() => updater(UID, bankId, false), 1000 * 60 * 30);
     await db.tables.Status.update(
       {
@@ -248,13 +281,10 @@ const updater = async (UID, bankId, isFirst = false) => {
         }
       }
     );
-    notificationSender(UID, 'updateError', {
+    await notificationSender(UID, 'updateError', {
       bankId,
       message: e.message
     });
-  } finally {
-    await session.close();
-    await browser.close();
   }
 };
 
