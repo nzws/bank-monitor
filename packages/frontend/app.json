@@ -3,6 +3,7 @@
     "name": "Bank Monitor",
     "slug": "bank-monitor",
     "privacy": "unlisted",
+    "sdkVersion": "36.0.0",
     "platforms": ["ios", "android", "web"],
     "version": "0.1.1",
     "orientation": "portrait",
