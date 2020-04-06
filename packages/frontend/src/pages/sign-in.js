@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, Button, Alert, AsyncStorage } from 'react-native';
-import { Notifications } from 'expo';
-import * as Permissions from 'expo-permissions';
+import { View, TextInput, Button, Alert } from 'react-native';
 import Constants from 'expo-constants';
-import { setItemAsync, getItemAsync } from 'expo-secure-store';
 import * as GoogleSignIn from 'expo-google-sign-in';
+import AsyncStorage from '@react-native-community/async-storage';
 import styled from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
 import { Center, Title } from '../components/styles/layout';
 import api from '../utils/api';
+import getNotificationToken from '../utils/notification-token';
+import * as SecureStore from '../utils/secure-store';
 
 const StyledContainer = styled(Center)({
   paddingTop: 50
@@ -46,21 +46,18 @@ const SignIn = () => {
         .catch(e => Alert.alert('Error', e.message));
     } else {
       setIsReady(true);
-      getItemAsync('uid').then(uid => uid && setUID(uid));
+      SecureStore.getItemAsync('uid').then(uid => uid && setUID(uid));
     }
     AsyncStorage.getItem('domain').then(domain => domain && setDomain(domain));
   }, []);
 
   const login = UID => {
     if (isExpo) {
-      setItemAsync('uid', UID);
+      SecureStore.setItemAsync('uid', UID);
     }
 
     AsyncStorage.setItem('domain', domain)
-      .then(() => Permissions.askAsync(Permissions.NOTIFICATIONS))
-      .then(({ status }) =>
-        status === 'granted' ? Notifications.getExpoPushTokenAsync() : null
-      )
+      .then(getNotificationToken)
       .then(token =>
         api({
           path: 'login',
@@ -76,7 +73,7 @@ const SignIn = () => {
           throw new Error(error);
         }
 
-        return setItemAsync('app_token', token);
+        return SecureStore.setItemAsync('app_token', token);
       })
       .then(() => navigation.navigate('Home'))
       .catch(e => {

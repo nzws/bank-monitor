@@ -40,6 +40,13 @@
         "backgroundColor": "#34B362"
       }
     },
+    "web": {
+      "build": {
+        "babel": {
+          "include": ["native-base"]
+        }
+      }
+    },
     "packagerOpts": {
       "config": "metro.config.js"
     }

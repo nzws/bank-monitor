@@ -13,7 +13,7 @@ jobs:
 
     env:
       node-version: 12.x
-      expo-sdk-version: 36.0.0
+      expo-sdk-version: 37.0.0
 
     runs-on: ${{ matrix.os }}
 
