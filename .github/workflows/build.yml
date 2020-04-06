@@ -21,6 +21,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Clean up disk space
+        run: |
+          sudo swapoff -a
+          sudo rm -f /swapfile
+          sudo apt clean
+
       - name: Use Node.js ${{ env.node-version }}
         uses: actions/setup-node@v1
         with:
@@ -28,6 +34,9 @@ jobs:
 
       - name: Install packages
         run: yarn --frozen-lockfile
+
+      - name: Check disk size
+        run: df -h
 
       - name: Link monorepo
         run: yarn f expo-link
