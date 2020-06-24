@@ -5,7 +5,7 @@
   "private": true,
   "devDependencies": {
     "@babel/node": "^7.8.7",
-    "@babel/preset-env": "^7.8.7",
+    "@babel/preset-env": "^7.10.3",
     "kleur": "^3.0.3",
     "nodemon": "^2.0.2",
     "sequelize-cli": "^5.5.1"
