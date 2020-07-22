@@ -12027,10 +12027,10 @@ react-native-keyboard-aware-scroll-view@0.9.1:
     prop-types "^15.6.2"
     react-native-iphone-x-helper "^1.0.3"
 
-react-native-reanimated@~1.7.1:
-  version "1.7.1"
-  resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-1.7.1.tgz#6363c7f3ebbabc56a05d5dccaf09d95f3b6a2d69"
-  integrity sha512-aBwhoQdH4shkeTPbi7vKcAwYOzBp/6zElEKuIOgby11TceoM7y5SgNImC3HbDWWld3QV2PA2AgQGwAy51WgF3Q==
+react-native-reanimated@~1.10.0:
+  version "1.10.0"
+  resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-1.10.0.tgz#529f9a5716164c72362e2e60bc720cea65239e1d"
+  integrity sha512-0+rRXZr199NMsGbJJ00fxi0XA7JRJuL7UnzapwSzx4J6CmrDHvb8qU3A/dTFPM4sbvL7MLmlD0aItaDU+0ELqQ==
   dependencies:
     fbjs "^1.0.0"
 
