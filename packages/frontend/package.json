@@ -34,7 +34,7 @@
     "@dotplants/expo-yarn-workspaces": "^1.2.1",
     "babel-preset-expo": "^8.1.0",
     "eslint-plugin-react": "^7.18.3",
-    "expo-cli": "^3.17.15"
+    "expo-cli": "^3.24.2"
   },
   "scripts": {
     "expo-link": "expo-yarn-workspaces postinstall",
