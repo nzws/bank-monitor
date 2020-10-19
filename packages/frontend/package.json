@@ -26,7 +26,7 @@
     "react-native-reanimated": "~1.7.1",
     "react-native-safe-area-context": "0.7.3",
     "react-native-screens": "~2.4.0",
-    "react-native-web": "~0.11",
+    "react-native-web": "~0.14",
     "styled-components": "^5.0.1",
     "unstated-next": "^1.1.0"
   },
