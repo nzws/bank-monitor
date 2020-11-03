@@ -27,7 +27,7 @@
     "react-native-safe-area-context": "0.7.3",
     "react-native-screens": "~2.4.0",
     "react-native-web": "~0.11",
-    "styled-components": "^5.0.1",
+    "styled-components": "^5.2.1",
     "unstated-next": "^1.1.0"
   },
   "devDependencies": {
